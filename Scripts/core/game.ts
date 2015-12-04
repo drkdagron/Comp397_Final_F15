@@ -21,6 +21,7 @@
 /// <reference path="../gameobjects/enemy.ts" />
 /// <reference path="../gameobjects/world.ts" />
 /// <reference path="../gameobjects/player.ts" />
+/// <reference path="../gameobjects/controlpoint.ts" />
 
 // GLOBAL GAME FRAMEWORK VARIABLES
 var assets: createjs.LoadQueue;
@@ -120,6 +121,22 @@ var bulletData = {
   },
 };
 
+var controlPointSheet: createjs.SpriteSheet;
+var controlPointData = {
+  
+  "images": [
+    "../../Assets/images/controlpoint/atlas.png"  
+  ],
+    
+  "frames": [
+    [0,0,100,100,0,0,0]
+  ],
+  
+  "animations": {
+    "controlPoint": [0]
+  },
+};
+
 var uiSheet: createjs.SpriteSheet;
 var uiData = {
   
@@ -140,6 +157,8 @@ var uiData = {
   },
 };
 
+
+
 function preload(): void{
     
     assets = new createjs.LoadQueue();
@@ -152,6 +171,7 @@ function preload(): void{
     worldSheet = new createjs.SpriteSheet(worldData);
     bulletSheet = new createjs.SpriteSheet(bulletData);
     uiSheet = new createjs.SpriteSheet(uiData);
+    controlPointSheet = new createjs.SpriteSheet(controlPointData);
 }
 
 

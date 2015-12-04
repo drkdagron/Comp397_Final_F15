@@ -8,6 +8,7 @@
         
         private world:gameobject.World;
         private player:gameobject.Player;
+        private controlPoint: gameobject.ControlPoint;
         
         private normalEnemies: gameobject.Enemy[] = [];
         private fastEnemies: gameobject.Enemy[] = [];
@@ -27,6 +28,11 @@
             
             this.world = new gameobject.World(worldSheet, "background");
             this.addChild(this.world);
+            
+            this.controlPoint = new gameobject.ControlPoint(controlPointSheet, "controlPoint");
+            this.controlPoint.x = Math.floor(Math.random() * 650 + 100);
+            this.controlPoint.y = Math.floor(Math.random() * 450 + 100);
+            this.addChild(this.controlPoint);
              
             for (var i = 0; i < 4; i++)
             {
@@ -52,9 +58,8 @@
                 this.fastEnemies[i].xDir = Math.random() * 3 - 1;
                 this.fastEnemies[i].yDir = Math.random() * 3 - 1;
                 this.addChild(this.fastEnemies[i]);
-            }
+            }          
             
-             
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
             this.addChild(this.player);
@@ -71,6 +76,7 @@
 
         public update(): void {
             this.player.update(this.bullets);
+            this.controlPoint.update();
             
             for (var x = 0; x < this.bullets.length; x++)
             {
