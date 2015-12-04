@@ -35,7 +35,7 @@
             
             for (var i = 0; i < 10; i++)
             {
-                this.enemies[i] = new gameobject.Enemy(enemySheet, "rock1");
+                this.enemies[i] = new gameobject.Enemy(enemySheet, "hardened");
                 this.enemies[i].x = 10 + i * 50;
                 this.enemies[i].y = 0;
                 this.enemies[i].xDir = Math.random() * 2 - 1;
@@ -43,7 +43,7 @@
                 this.addChild(this.enemies[i]);
             }
              
-            this.player = new gameobject.Player(playerSheet, "car");
+            this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
             this.addChild(this.player);
              
