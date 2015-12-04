@@ -13,8 +13,8 @@
 /// <reference path="../states/game.ts" />
 /// <reference path="../states/menu.ts" />
 /// <reference path="../gameobjects/UiButton.ts" />
-/// <reference path="../gameobjects/coin.ts" />
-/// <reference path="../gameobjects/rock.ts" />
+/// <reference path="../gameobjects/bullet.ts" />
+/// <reference path="../gameobjects/enemy.ts" />
 /// <reference path="../gameobjects/world.ts" />
 /// <reference path="../gameobjects/player.ts" />
 // GLOBAL GAME FRAMEWORK VARIABLES
@@ -77,24 +77,16 @@ var worldData = {
         "background": [0],
     },
 };
-var coinSheet;
-var coinData = {
+var bulletSheet;
+var bulletData = {
     "images": [
-        "../../Assets/images/coins/atlas.png"
+        "../../Assets/images/bullets/atlas.png"
     ],
     "frames": [
-        [0, 0, 40, 40, 0, 0, 0],
-        [40, 0, 40, 40, 0, 0, 0],
-        [80, 0, 40, 40, 0, 0, 0],
-        [0, 40, 40, 40, 0, 0, 0],
-        [40, 40, 40, 40, 0, 0, 0],
+        [0, 0, 16, 16, 0, 0, 0],
     ],
     "animations": {
-        "gold": [0],
-        "goldsilver": [1],
-        "silver": [2],
-        "bronze": [3],
-        "blue": [4],
+        "norton": [0],
     },
 };
 var uiSheet;
@@ -121,7 +113,7 @@ function preload() {
     playerSheet = new createjs.SpriteSheet(playerData);
     enemySheet = new createjs.SpriteSheet(enemyData);
     worldSheet = new createjs.SpriteSheet(worldData);
-    coinSheet = new createjs.SpriteSheet(coinData);
+    bulletSheet = new createjs.SpriteSheet(bulletData);
     uiSheet = new createjs.SpriteSheet(uiData);
 }
 function init() {

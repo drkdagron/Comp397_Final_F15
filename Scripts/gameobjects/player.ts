@@ -6,7 +6,7 @@ module gameobject
 		private lives: number = 3;
 		
 		private score:number = 0;
-		private coins:gameobject.Coin[] = [];
+		private coins:gameobject.Bullet[] = [];
 		
 		private firing: boolean = false;
 		private fireTimer: number = 0;
@@ -121,11 +121,25 @@ module gameobject
 			return this.lives;
 		}
 		
-		private Bang(coin:gameobject.Coin[]):void {
+		private Bang(coin:gameobject.Bullet[]):void {
+			
+			var x = stage.mouseX;
+			var y = stage.mouseY;
+			
+			var edgeX = this.x - x;
+			var edgeY = this.y - y;
+			
+			var norm = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+			edgeX /= -norm;
+			edgeY /= -norm;
+			
 			for (var i = 0; i < coin.length; i++)
 			{
-				if (coin[i].alive == true && coin[i].fired == false)
+				if (coin[i].alive == false && coin[i].fired == false)
 				{
+					coin[i].timer = 0;
+					coin[i].direction(edgeX, edgeY);
+					coin[i].alive = true;
 					coin[i].fired = true;
 					coin[i].x = this.x;
 					coin[i].y = this.y;
@@ -138,7 +152,7 @@ module gameobject
 			console.log("BANG");
 		}
 		
-		public update(coin:gameobject.Coin[])
+		public update(coin:gameobject.Bullet[])
 		{				
 			this.faceMouse();
 			

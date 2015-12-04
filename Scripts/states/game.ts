@@ -9,8 +9,8 @@
         private world:gameobject.World;
         private player:gameobject.Player;
         
-        private rock: gameobject.Rock[] = [];
-        private coin: gameobject.Coin[] = [];
+        private enemies: gameobject.Enemy[] = [];
+        private coin: gameobject.Bullet[] = [];
         
         private lives: objects.Label;
         private score: objects.Label;
@@ -29,8 +29,18 @@
              
             for (var i = 0; i < 4; i++)
             {
-                this.coin[i] = new gameobject.Coin();
+                this.coin[i] = new gameobject.Bullet();
                 this.addChild(this.coin[i]);
+            }
+            
+            for (var i = 0; i < 10; i++)
+            {
+                this.enemies[i] = new gameobject.Enemy(enemySheet, "rock1");
+                this.enemies[i].x = 10 + i * 50;
+                this.enemies[i].y = 0;
+                this.enemies[i].xDir = Math.random() * 2 - 1;
+                this.enemies[i].yDir = Math.random() * 2 - 1;
+                this.addChild(this.enemies[i]);
             }
              
             this.player = new gameobject.Player(playerSheet, "car");
@@ -53,7 +63,11 @@
             for (var x = 0; x < this.coin.length; x++)
             {
                 this.coin[x].update();
-            }       
+            }
+            for (var y = 0; y < this.enemies.length; y++)
+            {
+                this.enemies[y].update();
+            }
         }
     }
 } 

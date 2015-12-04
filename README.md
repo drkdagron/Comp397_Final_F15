@@ -1,3 +1,3 @@
-# COMP397-MailPilotDemo
+# COMP397-Final-F15
 
-Repo for COMP397 - Web Game Programming - Mail Pilot Demo for Assignment 3
+Repo for COMP397 - Final Assignment - Final Game Project

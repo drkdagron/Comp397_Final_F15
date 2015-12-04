@@ -98,8 +98,18 @@ var gameobject;
             return this.lives;
         };
         Player.prototype.Bang = function (coin) {
+            var x = stage.mouseX;
+            var y = stage.mouseY;
+            var edgeX = this.x - x;
+            var edgeY = this.y - y;
+            var norm = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+            edgeX /= -norm;
+            edgeY /= -norm;
             for (var i = 0; i < coin.length; i++) {
-                if (coin[i].alive == true && coin[i].fired == false) {
+                if (coin[i].alive == false && coin[i].fired == false) {
+                    coin[i].timer = 0;
+                    coin[i].direction(edgeX, edgeY);
+                    coin[i].alive = true;
                     coin[i].fired = true;
                     coin[i].x = this.x;
                     coin[i].y = this.y;

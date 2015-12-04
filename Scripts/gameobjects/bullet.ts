@@ -1,13 +1,13 @@
 module gameobject {
-	export class Coin extends createjs.Sprite {
+	export class Bullet extends createjs.Sprite {
 		
 		private scoreVal:number;
 		
 		private moveSpeed: number = 5;
 		
-		public alive: boolean = true;
+		public alive: boolean = false;
 		public fired: boolean = false;
-		public aliveTimer: number = 400;
+		public aliveTimer: number = 120;
 		public timer: number = 0;
 		
 		public xDir:number;
@@ -15,9 +15,9 @@ module gameobject {
 		
 		constructor()
 		{
-			super(coinSheet, "gold");
-			this.regX = 20;
-			this.regY = 20;
+			super(bulletSheet, "norton");
+			this.regX = 8;
+			this.regY = 8;
 			
 			this.x = -100;
 			this.y = -100;
@@ -28,18 +28,29 @@ module gameobject {
 			this.alive = true;
 		}
 		
+		public direction(x:number, y:number): void {
+			
+			this.xDir = x;
+			this.yDir = y;
+		}
+		
 		public update()
 		{
+			this.timer++;
+			if (this.timer > this.aliveTimer && this.alive)
+			{
+				this.alive = false;
+				this.fired = false;
+				this.x = -100;
+				this.y = -100;
+			}
 			if (this.alive == true && this.fired == true)
 			{
 				this.x += this.xDir * this.moveSpeed;
 				this.y += this.yDir * this.moveSpeed;
-				this.rotation += 0.5;
-			}
-			else if (this.alive == false)
-			{
 				
 			}
+			this.rotation += 30;
 		}
 	}
 }
