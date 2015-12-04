@@ -46,7 +46,7 @@ var playerData = {
         [0, 0, 50, 38, 0, 0, 0],
     ],
     "animations": {
-        "car": [0]
+        "ship": [0]
     },
 };
 var enemySheet;
@@ -55,14 +55,18 @@ var enemyData = {
         "../../Assets/images/enemies/atlas.png"
     ],
     "frames": [
-        [0, 0, 80, 80, 0, 0, 0],
-        [100, 0, 80, 80, 0, 0, 0],
-        [0, 100, 80, 80, 0, 0, 0]
+        [0, 0, 100, 100, 0, 0, 0],
+        [100, 0, 100, 100, 0, 0, 0],
+        [200, 0, 100, 100, 0, 0, 0],
+        [300, 0, 100, 100, 0, 0, 0],
+        [400, 0, 100, 100, 0, 0, 0]
     ],
     "animations": {
-        "rock1": [0],
-        "rock2": [1],
-        "rock3": [2],
+        "split": [0],
+        "normal": [1],
+        "hardened": [2],
+        "fast": [3],
+        "boss": [4]
     },
 };
 var worldSheet;

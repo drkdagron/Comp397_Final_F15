@@ -10,15 +10,13 @@ module gameobject{
 		private alive:boolean = false;
 		private lives: number = 0;
 		
-		constructor(sheet:createjs.SpriteSheet, tile:string)
+		constructor(sheet:createjs.SpriteSheet, frame:string)
 		{
-			super(sheet, tile);
+			super(sheet, frame);
 			
-			this.regX = 40;
-			this.regY = 40;
-			
-			this.x = -100;
-			this.y = 100;
+			this.regX = 50;
+			this.regY = 50;
+
 		}
 		
 		private move(x:number, y:number): void {

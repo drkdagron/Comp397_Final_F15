@@ -1,25 +1,22 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
-        function Enemy(sheet, tile) {
-            _super.call(this, sheet, tile);
+        function Enemy(sheet, frame) {
+            _super.call(this, sheet, frame);
             this.xDir = 0;
             this.yDir = 0;
             this.moveSpeed = 5;
             this.yBuffer = 20;
             this.alive = false;
             this.lives = 0;
-            this.regX = 40;
-            this.regY = 40;
-            this.x = -100;
-            this.y = 100;
+            this.regX = 50;
+            this.regY = 50;
         }
         Enemy.prototype.move = function (x, y) {
             this.x += x;

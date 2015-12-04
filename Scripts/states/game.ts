@@ -10,7 +10,7 @@
         private player:gameobject.Player;
         
         private enemies: gameobject.Enemy[] = [];
-        private coin: gameobject.Bullet[] = [];
+        private bullets: gameobject.Bullet[] = [];
         
         private lives: objects.Label;
         private score: objects.Label;
@@ -29,17 +29,17 @@
              
             for (var i = 0; i < 4; i++)
             {
-                this.coin[i] = new gameobject.Bullet();
-                this.addChild(this.coin[i]);
+                this.bullets[i] = new gameobject.Bullet();
+                this.addChild(this.bullets[i]);
             }
             
             for (var i = 0; i < 10; i++)
             {
-                this.enemies[i] = new gameobject.Enemy(enemySheet, "hardened");
+                this.enemies[i] = new gameobject.Enemy(enemySheet, "fast");
                 this.enemies[i].x = 10 + i * 50;
-                this.enemies[i].y = 0;
-                this.enemies[i].xDir = Math.random() * 2 - 1;
-                this.enemies[i].yDir = Math.random() * 2 - 1;
+                this.enemies[i].y = 300;
+                this.enemies[i].xDir = Math.random() * 3 - 1;
+                this.enemies[i].yDir = Math.random() * 3 - 1;
                 this.addChild(this.enemies[i]);
             }
              
@@ -58,11 +58,11 @@
         }
 
         public update(): void {
-            this.player.update(this.coin);
+            this.player.update(this.bullets);
             
-            for (var x = 0; x < this.coin.length; x++)
+            for (var x = 0; x < this.bullets.length; x++)
             {
-                this.coin[x].update();
+                this.bullets[x].update();
             }
             for (var y = 0; y < this.enemies.length; y++)
             {
