@@ -1,0 +1,54 @@
+{
+
+"images": [
+    "atlas.png"
+],
+
+"frames": [
+    [2, 2, 75, 31, 0, 0, 0],
+    [79, 2, 44, 30, 0, 0, 0],
+    [79, 34, 44, 30, 0, 0, 0],
+    [2, 35, 72, 36, 0, 0, 0],
+    [76, 66, 50, 28, 0, 0, 0],
+    [2, 73, 66, 42, 0, 0, 0],
+    [70, 96, 54, 31, 0, 0, 0],
+    [2, 117, 66, 42, 0, 0, 0],
+    [70, 129, 51, 51, 0, 0, 0],
+    [2, 161, 62, 43, 0, 0, 0],
+    [66, 182, 59, 33, 0, 0, 0],
+    [2, 206, 59, 12, 0, 0, 0],
+    [63, 217, 57, 31, 0, 0, 0],
+    [2, 220, 51, 51, 0, 0, 0],
+    [55, 250, 51, 51, 0, 0, 0],
+    [2, 303, 48, 146, 0, 0, 0],
+    [2, 273, 51, 26, 0, 0, 0],
+    [52, 303, 48, 146, 0, 0, 0]
+],
+
+"animations": {
+    "flyFly2": [0],
+    "snailShell": [1],
+    "snailShell_upsidedown": [2],
+    "flyFly1": [3],
+    "slimeWalk1": [4],
+    "fishDead": [5],
+    "snailWalk1": [6],
+    "fishSwim1": [7],
+    "blockerBody": [8],
+    "fishSwim2": [9],
+    "flyDead": [10],
+    "slimeDead": [11],
+    "snailWalk2": [12],
+    "blockerMad": [13],
+    "blockerSad": [14],
+    "pokerMad": [15],
+    "slimeWalk2": [16],
+    "pokerSad": [17]
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:dc78b7de3261d2ceff81814004d978e7:b62d1957bfdc59c3503a0dd3a67391ac:cbce6b53f0f49e0bf15173c25c41f876$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
