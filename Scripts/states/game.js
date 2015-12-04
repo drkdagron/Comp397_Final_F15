@@ -15,7 +15,8 @@ var states;
             this.floor = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan..................................................";
             this.tileSize = 70;
             this.startingY = canvas.clientHeight - 55;
-            this.enemies = [];
+            this.normalEnemies = [];
+            this.fastEnemies = [];
             this.bullets = [];
         }
         // PUBLIC METHODS
@@ -27,13 +28,21 @@ var states;
                 this.bullets[i] = new gameobject.Bullet();
                 this.addChild(this.bullets[i]);
             }
-            for (var i = 0; i < 10; i++) {
-                this.enemies[i] = new gameobject.Enemy(enemySheet, "fast");
-                this.enemies[i].x = 10 + i * 50;
-                this.enemies[i].y = 300;
-                this.enemies[i].xDir = Math.random() * 3 - 1;
-                this.enemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.enemies[i]);
+            for (var i = 0; i < 5; i++) {
+                this.normalEnemies[i] = new gameobject.Enemy(enemySheet, "normal");
+                this.normalEnemies[i].x = Math.floor(Math.random() * 800);
+                this.normalEnemies[i].y = Math.floor(Math.random() * 600);
+                this.normalEnemies[i].xDir = Math.random() * 3 - 1;
+                this.normalEnemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.normalEnemies[i]);
+            }
+            for (var i = 0; i < 3; i++) {
+                this.fastEnemies[i] = new gameobject.Enemy(enemySheet, "fast");
+                this.fastEnemies[i].x = 10 + i * 50;
+                this.fastEnemies[i].y = 300;
+                this.fastEnemies[i].xDir = Math.random() * 3 - 1;
+                this.fastEnemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.fastEnemies[i]);
             }
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
@@ -49,8 +58,11 @@ var states;
             for (var x = 0; x < this.bullets.length; x++) {
                 this.bullets[x].update();
             }
-            for (var y = 0; y < this.enemies.length; y++) {
-                this.enemies[y].update();
+            for (var y = 0; y < this.normalEnemies.length; y++) {
+                this.normalEnemies[y].update();
+            }
+            for (var y = 0; y < this.fastEnemies.length; y++) {
+                this.fastEnemies[y].update();
             }
         };
         return Game;

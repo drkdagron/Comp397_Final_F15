@@ -3,7 +3,7 @@ module gameobject
 	export class Player extends createjs.Sprite{	
 		private speed:number = 3;
 		private defaultTurnRate:number = 3.5;
-		private lives: number = 3;
+		private lives: number = 5;
 		
 		private score:number = 0;
 		private coins:gameobject.Bullet[] = [];

@@ -9,7 +9,8 @@
         private world:gameobject.World;
         private player:gameobject.Player;
         
-        private enemies: gameobject.Enemy[] = [];
+        private normalEnemies: gameobject.Enemy[] = [];
+        private fastEnemies: gameobject.Enemy[] = [];
         private bullets: gameobject.Bullet[] = [];
         
         private lives: objects.Label;
@@ -33,15 +34,26 @@
                 this.addChild(this.bullets[i]);
             }
             
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 5; i++)
             {
-                this.enemies[i] = new gameobject.Enemy(enemySheet, "fast");
-                this.enemies[i].x = 10 + i * 50;
-                this.enemies[i].y = 300;
-                this.enemies[i].xDir = Math.random() * 3 - 1;
-                this.enemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.enemies[i]);
+                this.normalEnemies[i] = new gameobject.Enemy(enemySheet, "normal");
+                this.normalEnemies[i].x = Math.floor(Math.random() * 800);
+                this.normalEnemies[i].y = Math.floor(Math.random() * 600);
+                this.normalEnemies[i].xDir = Math.random() * 3 - 1;
+                this.normalEnemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.normalEnemies[i]);
             }
+            
+            for (var i = 0; i < 3; i++)
+            {
+                this.fastEnemies[i] = new gameobject.Enemy(enemySheet, "fast");
+                this.fastEnemies[i].x = 10 + i * 50;
+                this.fastEnemies[i].y = 300;
+                this.fastEnemies[i].xDir = Math.random() * 3 - 1;
+                this.fastEnemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.fastEnemies[i]);
+            }
+            
              
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
@@ -64,9 +76,13 @@
             {
                 this.bullets[x].update();
             }
-            for (var y = 0; y < this.enemies.length; y++)
+            for (var y = 0; y < this.normalEnemies.length; y++)
             {
-                this.enemies[y].update();
+                this.normalEnemies[y].update();
+            }
+            for (var y = 0; y < this.fastEnemies.length; y++)
+            {
+                this.fastEnemies[y].update();
             }
         }
     }

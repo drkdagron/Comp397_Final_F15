@@ -11,7 +11,7 @@ var gameobject;
             _super.call(this, sheet, frame);
             this.speed = 3;
             this.defaultTurnRate = 3.5;
-            this.lives = 3;
+            this.lives = 5;
             this.score = 0;
             this.coins = [];
             this.firing = false;
