@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var gameobject;
 (function (gameobject) {
@@ -76,6 +77,9 @@ var gameobject;
             var edgeY = y - this.y;
             var rotateValue = (Math.atan2(edgeY, edgeX) * (180 / Math.PI)) + 90;
             this.rotation = rotateValue;
+        };
+        Player.prototype.rotate = function (v) {
+            this.rotation += v;
         };
         Player.prototype.move = function (x, y) {
             this.x += x;

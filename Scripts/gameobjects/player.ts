@@ -90,6 +90,11 @@ module gameobject
 			this.rotation = rotateValue;
 		}
 		
+		private rotate(v:number)
+		{
+			this.rotation += v;
+		}
+		
 		private move(x:number, y:number)
 		{
 			this.x += x;
@@ -170,19 +175,19 @@ module gameobject
 			
 			if (config.MOVE_LEFT)
 			{
-				this.move(-this.speed, 0);
+				this.move(-this.speed,  0);
 			}
 			if (config.MOVE_RIGHT)
 			{
-				this.move(this.speed,0);
+				this.move(this.speed, 0);
 			}
 			if (config.MOVE_UP)
 			{
-				this.move(0,-this.speed);
+				this.move(0, -this.speed);
 			}
 			if (config.MOVE_DOWN)
 			{
-				this.move(0,this.speed);
+				this.move(0, this.speed);
 			}
 			
 			if (this.x < 10)

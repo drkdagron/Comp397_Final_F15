@@ -8,8 +8,8 @@ module gameobject {
 		{
 			super(sheet, frame);
 			
-			this.regX = 50;
-			this.regY = 50;
+			this.regX = 45.5;
+			this.regY = 45.5;
 		}
 		
 		public Hit(): void
@@ -27,7 +27,7 @@ module gameobject {
 		}
 		
 		public update() { 
-			
+			this.rotation += 5;
 		}
 	}
 }

@@ -100,7 +100,7 @@ var controlPointData = {
         "../../Assets/images/controlpoint/atlas.png"
     ],
     "frames": [
-        [0, 0, 100, 100, 0, 0, 0]
+        [0, 0, 91, 91, 0, 0, 0]
     ],
     "animations": {
         "controlPoint": [0]

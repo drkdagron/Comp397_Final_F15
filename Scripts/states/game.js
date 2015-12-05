@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -15,8 +16,7 @@ var states;
             this.floor = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan..................................................";
             this.tileSize = 70;
             this.startingY = canvas.clientHeight - 55;
-            this.normalEnemies = [];
-            this.fastEnemies = [];
+            this.enemies = [];
             this.bullets = [];
         }
         // PUBLIC METHODS
@@ -33,20 +33,32 @@ var states;
                 this.addChild(this.bullets[i]);
             }
             for (var i = 0; i < 5; i++) {
-                this.normalEnemies[i] = new gameobject.Enemy(enemySheet, "normal");
-                this.normalEnemies[i].x = Math.floor(Math.random() * 800);
-                this.normalEnemies[i].y = Math.floor(Math.random() * 600);
-                this.normalEnemies[i].xDir = Math.random() * 3 - 1;
-                this.normalEnemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.normalEnemies[i]);
+                this.enemies[i] = new gameobject.Enemy(enemySheet, "normal", 0);
+                this.enemies[i].x = Math.floor(Math.random() * 800);
+                this.enemies[i].y = Math.floor(Math.random() * 600);
+                this.enemies[i].xDir = Math.random() * 3 - 1;
+                this.enemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.enemies[i]);
             }
-            for (var i = 0; i < 3; i++) {
-                this.fastEnemies[i] = new gameobject.Enemy(enemySheet, "fast");
-                this.fastEnemies[i].x = 10 + i * 50;
-                this.fastEnemies[i].y = 300;
-                this.fastEnemies[i].xDir = Math.random() * 3 - 1;
-                this.fastEnemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.fastEnemies[i]);
+            for (var x = 5; x < 8; x++) {
+                var rnd = Math.floor(Math.random() * 3);
+                switch (rnd) {
+                    case 0:
+                        this.enemies[x] = new gameobject.Enemy(enemySheet, "fast", 1);
+                        break;
+                    case 1:
+                        this.enemies[x] = new gameobject.Enemy(enemySheet, "split", 2);
+                        break;
+                    case 2:
+                        this.enemies[x] = new gameobject.Enemy(enemySheet, "hardened", 3);
+                }
+                this.enemies[x].x = Math.floor(Math.random() * 800);
+                this.enemies[x].y = Math.floor(Math.random() * 600);
+                var dirX = Math.random() * 2 - 1;
+                var dirY = Math.random() * 2 - 1;
+                this.enemies[x].xDir = dirX;
+                this.enemies[x].yDir = dirY;
+                this.addChild(this.enemies[x]);
             }
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
@@ -63,11 +75,8 @@ var states;
             for (var x = 0; x < this.bullets.length; x++) {
                 this.bullets[x].update();
             }
-            for (var y = 0; y < this.normalEnemies.length; y++) {
-                this.normalEnemies[y].update();
-            }
-            for (var y = 0; y < this.fastEnemies.length; y++) {
-                this.fastEnemies[y].update();
+            for (var y = 0; y < this.enemies.length; y++) {
+                this.enemies[y].update();
             }
         };
         return Game;

@@ -10,8 +10,7 @@
         private player:gameobject.Player;
         private controlPoint: gameobject.ControlPoint;
         
-        private normalEnemies: gameobject.Enemy[] = [];
-        private fastEnemies: gameobject.Enemy[] = [];
+        private enemies: gameobject.Enemy[] = [];
         private bullets: gameobject.Bullet[] = [];
         
         private lives: objects.Label;
@@ -41,25 +40,37 @@
             }
             
             for (var i = 0; i < 5; i++)
-            {
-                this.normalEnemies[i] = new gameobject.Enemy(enemySheet, "normal");
-                this.normalEnemies[i].x = Math.floor(Math.random() * 800);
-                this.normalEnemies[i].y = Math.floor(Math.random() * 600);
-                this.normalEnemies[i].xDir = Math.random() * 3 - 1;
-                this.normalEnemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.normalEnemies[i]);
+            {                
+                this.enemies[i] = new gameobject.Enemy(enemySheet, "normal", 0);
+                this.enemies[i].x = Math.floor(Math.random() * 800);
+                this.enemies[i].y = Math.floor(Math.random() * 600);
+                this.enemies[i].xDir = Math.random() * 3 - 1;
+                this.enemies[i].yDir = Math.random() * 3 - 1;
+                this.addChild(this.enemies[i]);
             }
-            
-            for (var i = 0; i < 3; i++)
+            for (var x = 5; x < 8; x++)
             {
-                this.fastEnemies[i] = new gameobject.Enemy(enemySheet, "fast");
-                this.fastEnemies[i].x = 10 + i * 50;
-                this.fastEnemies[i].y = 300;
-                this.fastEnemies[i].xDir = Math.random() * 3 - 1;
-                this.fastEnemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.fastEnemies[i]);
-            }          
-            
+                var rnd = Math.floor(Math.random() * 3);
+               switch (rnd)
+               {
+                   case 0:
+                    this.enemies[x] = new gameobject.Enemy(enemySheet, "fast", 1);
+                    break;
+                   case 1:
+                    this.enemies[x] = new gameobject.Enemy(enemySheet, "split", 2);
+                    break;
+                   case 2:
+                    this.enemies[x] = new gameobject.Enemy(enemySheet, "hardened", 3);
+               }
+               this.enemies[x].x = Math.floor(Math.random() * 800);
+                this.enemies[x].y = Math.floor(Math.random() * 600);
+                var dirX = Math.random() * 2 - 1;
+                var dirY = Math.random() * 2 - 1;
+                this.enemies[x].xDir = dirX;
+                this.enemies[x].yDir = dirY;
+                this.addChild(this.enemies[x]);
+            }
+                       
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
             this.addChild(this.player);
@@ -82,14 +93,13 @@
             {
                 this.bullets[x].update();
             }
-            for (var y = 0; y < this.normalEnemies.length; y++)
+            for (var y = 0; y < this.enemies.length; y++)
             {
-                this.normalEnemies[y].update();
+                this.enemies[y].update();
             }
-            for (var y = 0; y < this.fastEnemies.length; y++)
-            {
-                this.fastEnemies[y].update();
-            }
+            
+            
+            
         }
     }
 } 
