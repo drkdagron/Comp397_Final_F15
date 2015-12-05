@@ -95,10 +95,15 @@ module gameobject
 			this.rotation += v;
 		}
 		
-		private move(x:number, y:number)
+		private move(x:number)
 		{
-			this.x += x;
-			this.y += y;
+			var radian = this.rotation * (Math.PI/180);
+			console.log(this.rotation);
+			var eX = Math.cos(radian + Math.PI/2);
+			var eY = Math.sin(radian + Math.PI/2);
+			console.log(eX + "\t" + eY);
+			this.x -= eX * x;
+			this.y -= eY * x;
 		}
 		
 		public addScore(add:number) : void
@@ -127,12 +132,13 @@ module gameobject
 		}
 		
 		private Bang(coin:gameobject.Bullet[]):void {
+
+			var radian = this.rotation * (Math.PI/180);
+			var eX = Math.cos(radian + Math.PI/2);
+			var eY = Math.sin(radian + Math.PI/2);
 			
-			var x = stage.mouseX;
-			var y = stage.mouseY;
-			
-			var edgeX = this.x - x;
-			var edgeY = this.y - y;
+			var edgeX = eX;
+			var edgeY = eY;
 			
 			var norm = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
 			edgeX /= -norm;
@@ -159,7 +165,7 @@ module gameobject
 		
 		public update(coin:gameobject.Bullet[])
 		{				
-			this.faceMouse();
+			//this.faceMouse();
 			
 			this.fireTimer++;
 			if (this.fireTimer > this.fireRate)
@@ -175,19 +181,19 @@ module gameobject
 			
 			if (config.MOVE_LEFT)
 			{
-				this.move(-this.speed,  0);
+				this.rotate(-3);
 			}
 			if (config.MOVE_RIGHT)
 			{
-				this.move(this.speed, 0);
+				this.rotate(3);
 			}
 			if (config.MOVE_UP)
 			{
-				this.move(0, -this.speed);
+				this.move(this.speed);
 			}
 			if (config.MOVE_DOWN)
 			{
-				this.move(0, this.speed);
+				this.move(-this.speed);
 			}
 			
 			if (this.x < 10)

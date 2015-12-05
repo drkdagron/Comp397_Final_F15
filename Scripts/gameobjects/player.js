@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
@@ -81,9 +80,14 @@ var gameobject;
         Player.prototype.rotate = function (v) {
             this.rotation += v;
         };
-        Player.prototype.move = function (x, y) {
-            this.x += x;
-            this.y += y;
+        Player.prototype.move = function (x) {
+            var radian = this.rotation * (Math.PI / 180);
+            console.log(this.rotation);
+            var eX = Math.cos(radian + Math.PI / 2);
+            var eY = Math.sin(radian + Math.PI / 2);
+            console.log(eX + "\t" + eY);
+            this.x -= eX * x;
+            this.y -= eY * x;
         };
         Player.prototype.addScore = function (add) {
             this.score += add;
@@ -101,10 +105,11 @@ var gameobject;
             return this.lives;
         };
         Player.prototype.Bang = function (coin) {
-            var x = stage.mouseX;
-            var y = stage.mouseY;
-            var edgeX = this.x - x;
-            var edgeY = this.y - y;
+            var radian = this.rotation * (Math.PI / 180);
+            var eX = Math.cos(radian + Math.PI / 2);
+            var eY = Math.sin(radian + Math.PI / 2);
+            var edgeX = eX;
+            var edgeY = eY;
             var norm = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
             edgeX /= -norm;
             edgeY /= -norm;
@@ -123,7 +128,7 @@ var gameobject;
             console.log("BANG");
         };
         Player.prototype.update = function (coin) {
-            this.faceMouse();
+            //this.faceMouse();
             this.fireTimer++;
             if (this.fireTimer > this.fireRate) {
                 this.firing = true;
@@ -134,16 +139,16 @@ var gameobject;
                 this.Bang(coin);
             }
             if (config.MOVE_LEFT) {
-                this.move(-this.speed, 0);
+                this.rotate(-3);
             }
             if (config.MOVE_RIGHT) {
-                this.move(this.speed, 0);
+                this.rotate(3);
             }
             if (config.MOVE_UP) {
-                this.move(0, -this.speed);
+                this.move(this.speed);
             }
             if (config.MOVE_DOWN) {
-                this.move(0, this.speed);
+                this.move(-this.speed);
             }
             if (this.x < 10) {
                 this.x = 10;
