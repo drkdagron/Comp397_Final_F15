@@ -22,6 +22,8 @@ module gameobject{
 			
 			this.lives = 3;
 			this.typeID = type;
+			
+			this.alive = true;
 			switch (this.typeID)
 			{
 				case 1:
@@ -62,26 +64,36 @@ module gameobject{
 			}
 		}
 		
+		public Kill(): void {
+			this.lives = 0;
+			this.alive = false;
+			this.x = -100;
+			this.y = 100;
+		}
+		
 		public update()
 		{
-			this.move(this.xDir, this.yDir);
-			
-			if (this.x < 0 - 40)
+			if (this.alive)
 			{
-				this.x = 840;
-			}
-			if (this.x > 840)
-			{
-				this.x = 0 - 40;
-			}
-			
-			if (this.y > 640)
-			{
-				this.y = 0 - 40;
-			}
-			if (this.y < 0 - 40)
-			{
-				this.y = 640;
+				this.move(this.xDir, this.yDir);
+				
+				if (this.x < 0 - 40)
+				{
+					this.x = 840;
+				}
+				if (this.x > 840)
+				{
+					this.x = 0 - 40;
+				}
+				
+				if (this.y > 640)
+				{
+					this.y = 0 - 40;
+				}
+				if (this.y < 0 - 40)
+				{
+					this.y = 640;
+				}
 			}
 		}
 	}

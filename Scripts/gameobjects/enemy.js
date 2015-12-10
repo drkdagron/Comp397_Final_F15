@@ -22,6 +22,7 @@ var gameobject;
             this.regY = 50;
             this.lives = 3;
             this.typeID = type;
+            this.alive = true;
             switch (this.typeID) {
                 case 1:
                     //fast moving enemy
@@ -55,19 +56,27 @@ var gameobject;
                 this.y = 100;
             }
         };
+        Enemy.prototype.Kill = function () {
+            this.lives = 0;
+            this.alive = false;
+            this.x = -100;
+            this.y = 100;
+        };
         Enemy.prototype.update = function () {
-            this.move(this.xDir, this.yDir);
-            if (this.x < 0 - 40) {
-                this.x = 840;
-            }
-            if (this.x > 840) {
-                this.x = 0 - 40;
-            }
-            if (this.y > 640) {
-                this.y = 0 - 40;
-            }
-            if (this.y < 0 - 40) {
-                this.y = 640;
+            if (this.alive) {
+                this.move(this.xDir, this.yDir);
+                if (this.x < 0 - 40) {
+                    this.x = 840;
+                }
+                if (this.x > 840) {
+                    this.x = 0 - 40;
+                }
+                if (this.y > 640) {
+                    this.y = 0 - 40;
+                }
+                if (this.y < 0 - 40) {
+                    this.y = 640;
+                }
             }
         };
         return Enemy;

@@ -95,6 +95,10 @@ module gameobject
 			this.rotation += v;
 		}
 		
+		public Hit() {
+			this.lives--;
+		}
+		
 		private move(x:number)
 		{
 			var radian = this.rotation * (Math.PI/180);

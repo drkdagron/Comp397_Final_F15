@@ -81,6 +81,9 @@ var gameobject;
         Player.prototype.rotate = function (v) {
             this.rotation += v;
         };
+        Player.prototype.Hit = function () {
+            this.lives--;
+        };
         Player.prototype.move = function (x) {
             var radian = this.rotation * (Math.PI / 180);
             console.log(this.rotation);

@@ -95,6 +95,8 @@
             this.controlPoint.update();
             
             this.checkCollisionBulletEnemy();
+            this.checkCollisionEnemyPlayer();
+            this.checkCOllisionEnemyControlPoint();
             
             for (var x = 0; x < this.bullets.length; x++)
             {
@@ -104,9 +106,38 @@
             {
                 this.enemies[y].update();
             }
-            
-            
-            
+        }
+        
+        private checkCOllisionEnemyControlPoint() : void {
+            for (var ene = 0; ene < this.enemies.length; ene++)
+            {
+                var edgeX = this.controlPoint.x + 50 - this.enemies[ene].x + 25;
+                var edgeY = this.controlPoint.y + 50 - this.enemies[ene].y + 25;
+                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                
+                if (len < 50 + 25)
+                {
+                    this.controlPoint.Hit();
+                    this.enemies[ene].Kill();
+                }
+            }
+        }
+        
+        private checkCollisionEnemyPlayer() : void {
+            for (var ene = 0; ene < this.enemies.length; ene++)
+            {
+                var l1:number = 25;
+                var l2:number = 24;
+                var edgeX = this.player.x - this.enemies[ene].x + 25;
+                var edgeY = this.player.y - this.enemies[ene].y + 25;
+                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                
+                if (len < l1+l2)
+                {
+                    this.enemies[ene].Kill();
+                    this.player.Hit();
+                }
+            }
         }
         
         private checkCollisionBulletEnemy() : void {
@@ -116,8 +147,8 @@
                 {
                     var l1:number = 8; //bullet radius
                     var l2:number = 25;
-                    var edgeX = this.bullets[bul].x - this.enemies[ene].x;
-                    var edgeY = this.bullets[bul].y - this.enemies[ene].y;
+                    var edgeX = this.bullets[bul].x - this.enemies[ene].x + 25;
+                    var edgeY = this.bullets[bul].y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     
                     if (len < l1+l2)
