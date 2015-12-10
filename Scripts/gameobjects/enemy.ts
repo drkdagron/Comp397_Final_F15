@@ -50,9 +50,14 @@ module gameobject{
 			this.y += y * this.moveSpeed;
 		}
 		
+		public getAlive():boolean
+		{
+			return this.alive;
+		}
+		
 		public Hit(): void
 		{
-			if (this.lives > 0)
+			if (this.lives > 1)
 			{
 				this.lives--;
 			}

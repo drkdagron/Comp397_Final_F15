@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
@@ -46,8 +45,11 @@ var gameobject;
             this.x += x * this.moveSpeed;
             this.y += y * this.moveSpeed;
         };
+        Enemy.prototype.getAlive = function () {
+            return this.alive;
+        };
         Enemy.prototype.Hit = function () {
-            if (this.lives > 0) {
+            if (this.lives > 1) {
                 this.lives--;
             }
             else {

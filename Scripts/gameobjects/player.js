@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
@@ -12,7 +11,7 @@ var gameobject;
             _super.call(this, sheet, frame);
             this.speed = 6;
             this.defaultTurnRate = 3.5;
-            this.lives = 5;
+            this.lives = 3;
             this.score = 0;
             this.coins = [];
             this.firing = false;
@@ -83,6 +82,11 @@ var gameobject;
         };
         Player.prototype.Hit = function () {
             this.lives--;
+        };
+        Player.prototype.Kill = function () {
+            this.lives = 0;
+            this.x = -100;
+            this.y = 100;
         };
         Player.prototype.move = function (x) {
             var radian = this.rotation * (Math.PI / 180);

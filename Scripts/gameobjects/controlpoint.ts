@@ -2,7 +2,7 @@ module gameobject {
 	export class ControlPoint extends createjs.Sprite {
 		
 		private alive:boolean = false;
-		private lives: number = 0;
+		private lives: number = 5;
 		
 		constructor(sheet:createjs.SpriteSheet, frame:string)
 		{
@@ -14,7 +14,7 @@ module gameobject {
 		
 		public Hit(): void
 		{
-			if (this.lives > 0)
+			if (this.lives > 1)
 			{
 				this.lives--;
 			}
@@ -24,6 +24,23 @@ module gameobject {
 				this.x = -100;
 				this.y = 100;
 			}
+		}
+		
+		public Kill(): void {
+			this.lives = 0;
+			this.alive = false;
+			this.x = -100;
+			this.y = 100;
+		}
+		
+	    public getLives():number
+		{
+			return this.lives;
+		}
+		
+		public setLives(lives: number):void
+		{
+			this.lives = lives;
 		}
 		
 		public update() { 

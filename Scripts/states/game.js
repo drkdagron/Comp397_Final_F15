@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var states;
 (function (states) {
@@ -68,9 +67,11 @@ var states;
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
             this.addChild(this.player);
-            this.lives = new objects.Label("Lives: " + this.player.getLives(), "30px Consolas", "#FFF", 100, 20);
-            this.addChild(this.lives);
-            this.score = new objects.Label("Score: " + this.player.getScore(), "30px Consolas", "#FFF", 700, 20);
+            this.cpLives = new objects.Label("Control Point Lives: " + this.controlPoint.getLives(), "30px Consolas", "#FFF", 200, 20);
+            this.addChild(this.cpLives);
+            this.pLives = new objects.Label("Ship Lives: " + this.player.getLives(), "30px Consolas", "#FFF", 0, 70);
+            this.addChild(this.pLives);
+            this.score = new objects.Label("Score: " + this.player.getScore(), "30px Consolas", "#FFF", 500, 20);
             this.addChild(this.score);
             stage.addChild(this);
         };
@@ -79,49 +80,86 @@ var states;
             this.controlPoint.update();
             this.checkCollisionBulletEnemy();
             this.checkCollisionEnemyPlayer();
-            this.checkCOllisionEnemyControlPoint();
+            this.checkCollisionEnemyControlPoint();
             for (var x = 0; x < this.bullets.length; x++) {
                 this.bullets[x].update();
             }
             for (var y = 0; y < this.enemies.length; y++) {
                 this.enemies[y].update();
             }
+            this.cpLives.text = "Control Point Lives: " + this.controlPoint.getLives();
+            this.pLives.text = "Ship Lives: " + this.player.getLives();
+            this.score.text = "Score: " + this.player.getScore();
         };
-        Game.prototype.checkCOllisionEnemyControlPoint = function () {
+        Game.prototype.checkCollisionEnemyControlPoint = function () {
             for (var ene = 0; ene < this.enemies.length; ene++) {
-                var edgeX = this.controlPoint.x + 50 - this.enemies[ene].x + 25;
-                var edgeY = this.controlPoint.y + 50 - this.enemies[ene].y + 25;
-                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                if (len < 50 + 25) {
-                    this.controlPoint.Hit();
-                    this.enemies[ene].Kill();
+                if (this.enemies[ene].typeID == 4) {
+                    var edgeX = this.controlPoint.x - this.enemies[ene].x + 50;
+                    var edgeY = this.controlPoint.y - this.enemies[ene].y + 50;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    if (len < 50 + 50) {
+                        this.controlPoint.Kill();
+                        this.enemies[ene].Kill();
+                    }
+                }
+                else {
+                    var edgeX = this.controlPoint.x - this.enemies[ene].x + 25;
+                    var edgeY = this.controlPoint.y - this.enemies[ene].y + 25;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    if (len < 50 + 25) {
+                        this.controlPoint.Hit();
+                        this.enemies[ene].Kill();
+                    }
                 }
             }
         };
         Game.prototype.checkCollisionEnemyPlayer = function () {
             for (var ene = 0; ene < this.enemies.length; ene++) {
-                var l1 = 25;
-                var l2 = 24;
-                var edgeX = this.player.x - this.enemies[ene].x + 25;
-                var edgeY = this.player.y - this.enemies[ene].y + 25;
-                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                if (len < l1 + l2) {
-                    this.enemies[ene].Kill();
-                    this.player.Hit();
+                if (this.enemies[ene].typeID == 4) {
+                    var edgeX = this.player.x - this.enemies[ene].x + 50;
+                    var edgeY = this.player.y - this.enemies[ene].y + 50;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    if (len < 25 + 50) {
+                        this.player.Kill();
+                    }
+                }
+                else {
+                    var edgeX = this.player.x - this.enemies[ene].x + 25;
+                    var edgeY = this.player.y - this.enemies[ene].y + 25;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    if (len < 25 + 25) {
+                        this.enemies[ene].Kill();
+                        this.player.Hit();
+                        if (this.enemies[ene].typeID == 0) {
+                            this.player.addScore(1000);
+                        }
+                        else {
+                            this.player.addScore(1500);
+                        }
+                    }
                 }
             }
         };
         Game.prototype.checkCollisionBulletEnemy = function () {
             for (var bul = 0; bul < this.bullets.length; bul++) {
                 for (var ene = 0; ene < this.enemies.length; ene++) {
-                    var l1 = 8; //bullet radius
-                    var l2 = 25;
                     var edgeX = this.bullets[bul].x - this.enemies[ene].x + 25;
                     var edgeY = this.bullets[bul].y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                    if (len < l1 + l2) {
+                    if (len < 8 + 25) {
                         this.bullets[bul].KillBullet();
                         this.enemies[ene].Hit();
+                        if (!this.enemies[ene].getAlive()) {
+                            if (this.enemies[ene].typeID == 0) {
+                                this.player.addScore(1000);
+                            }
+                            else if (this.enemies[ene].typeID == 4) {
+                                this.player.addScore(2500);
+                            }
+                            else {
+                                this.player.addScore(1500);
+                            }
+                        }
                     }
                 }
             }

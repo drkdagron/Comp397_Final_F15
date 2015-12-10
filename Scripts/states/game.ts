@@ -13,7 +13,8 @@
         private enemies: gameobject.Enemy[] = [];
         private bullets: gameobject.Bullet[] = [];
         
-        private lives: objects.Label;
+        private cpLives: objects.Label;
+        private pLives: objects.Label;
         private score: objects.Label;
 
         // CONSTRUCTOR
@@ -80,10 +81,13 @@
             this.player.setPosition(75, 240);
             this.addChild(this.player);
              
-            this.lives = new objects.Label("Lives: " + this.player.getLives(), "30px Consolas", "#FFF", 100, 20);
-            this.addChild(this.lives);
+            this.cpLives = new objects.Label("Control Point Lives: " + this.controlPoint.getLives(), "30px Consolas", "#FFF", 200, 20);
+            this.addChild(this.cpLives);
             
-            this.score = new objects.Label("Score: " + this.player.getScore(), "30px Consolas", "#FFF", 700, 20);
+            this.pLives = new objects.Label("Ship Lives: " + this.player.getLives(), "30px Consolas", "#FFF", 0, 70)
+            this.addChild(this.pLives);
+            
+            this.score = new objects.Label("Score: " + this.player.getScore(), "30px Consolas", "#FFF", 500, 20);
             this.addChild(this.score);
             
             
@@ -96,7 +100,7 @@
             
             this.checkCollisionBulletEnemy();
             this.checkCollisionEnemyPlayer();
-            this.checkCOllisionEnemyControlPoint();
+            this.checkCollisionEnemyControlPoint();
             
             for (var x = 0; x < this.bullets.length; x++)
             {
@@ -106,19 +110,41 @@
             {
                 this.enemies[y].update();
             }
+            
+            
+                this.cpLives.text = "Control Point Lives: " + this.controlPoint.getLives();
+                this.pLives.text = "Ship Lives: " + this.player.getLives();
+                this.score.text = "Score: " + this.player.getScore();
+        
+            
         }
         
-        private checkCOllisionEnemyControlPoint() : void {
+        private checkCollisionEnemyControlPoint() : void {
             for (var ene = 0; ene < this.enemies.length; ene++)
             {
-                var edgeX = this.controlPoint.x + 50 - this.enemies[ene].x + 25;
-                var edgeY = this.controlPoint.y + 50 - this.enemies[ene].y + 25;
-                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                
-                if (len < 50 + 25)
+                if (this.enemies[ene].typeID == 4)
                 {
-                    this.controlPoint.Hit();
-                    this.enemies[ene].Kill();
+                    var edgeX = this.controlPoint.x - this.enemies[ene].x + 50;
+                    var edgeY = this.controlPoint.y - this.enemies[ene].y + 50;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                
+                    if (len < 50 + 50)
+                    {
+                        this.controlPoint.Kill();
+                        this.enemies[ene].Kill();
+                    }
+                }
+                else
+                {
+                    var edgeX = this.controlPoint.x - this.enemies[ene].x + 25;
+                    var edgeY = this.controlPoint.y - this.enemies[ene].y + 25;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                
+                    if (len < 50 + 25)
+                    {
+                        this.controlPoint.Hit();
+                        this.enemies[ene].Kill();                    
+                    }
                 }
             }
         }
@@ -126,17 +152,38 @@
         private checkCollisionEnemyPlayer() : void {
             for (var ene = 0; ene < this.enemies.length; ene++)
             {
-                var l1:number = 25;
-                var l2:number = 24;
-                var edgeX = this.player.x - this.enemies[ene].x + 25;
-                var edgeY = this.player.y - this.enemies[ene].y + 25;
-                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                
-                if (len < l1+l2)
+                if (this.enemies[ene].typeID == 4)
                 {
-                    this.enemies[ene].Kill();
-                    this.player.Hit();
+                    var edgeX = this.player.x - this.enemies[ene].x + 50;
+                    var edgeY = this.player.y - this.enemies[ene].y + 50;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    
+                    if (len < 25 + 50)
+                    {
+                        this.player.Kill();
+                    }
                 }
+                else
+                {
+                    var edgeX = this.player.x - this.enemies[ene].x + 25;
+                    var edgeY = this.player.y - this.enemies[ene].y + 25;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    
+                    if (len < 25+25)
+                    {
+                        this.enemies[ene].Kill();
+                        this.player.Hit();
+                        if (this.enemies[ene].typeID == 0)
+                        {
+                            this.player.addScore(1000);
+                        }
+                        else
+                        {
+                            this.player.addScore(1500);
+                        }
+                    }
+                }
+                
             }
         }
         
@@ -145,16 +192,29 @@
             {
                 for (var ene = 0; ene < this.enemies.length; ene++)
                 {
-                    var l1:number = 8; //bullet radius
-                    var l2:number = 25;
                     var edgeX = this.bullets[bul].x - this.enemies[ene].x + 25;
                     var edgeY = this.bullets[bul].y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     
-                    if (len < l1+l2)
+                    if (len < 8 + 25)
                     {
                         this.bullets[bul].KillBullet();
                         this.enemies[ene].Hit();
+                        if (!this.enemies[ene].getAlive())
+                        {
+                            if (this.enemies[ene].typeID == 0)
+                            {
+                                this.player.addScore(1000);
+                            }
+                            else if (this.enemies[ene].typeID == 4)
+                            {
+                                this.player.addScore(2500);
+                            }
+                            else
+                            {
+                                this.player.addScore(1500);
+                            }
+                        }
                     }
                 }
             }
