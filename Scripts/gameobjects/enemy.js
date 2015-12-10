@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var gameobject;
 (function (gameobject) {
@@ -11,7 +12,7 @@ var gameobject;
             _super.call(this, sheet, frame);
             this.xDir = 0;
             this.yDir = 0;
-            this.moveSpeed = 2;
+            this.moveSpeed = 4;
             this.yBuffer = 20;
             this.alive = false;
             this.lives = 0;
@@ -24,7 +25,7 @@ var gameobject;
             switch (this.typeID) {
                 case 1:
                     //fast moving enemy
-                    this.moveSpeed = 4;
+                    this.moveSpeed = 8;
                     this.lives = 1;
                     break;
                 case 2:
@@ -32,7 +33,7 @@ var gameobject;
                     break;
                 case 3:
                     //hardened/heavy enemy
-                    this.moveSpeed = 1;
+                    this.moveSpeed = 2;
                     this.lives = 5;
                     break;
                 case 4:

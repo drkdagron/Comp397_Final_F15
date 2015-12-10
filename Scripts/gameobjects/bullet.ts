@@ -34,10 +34,15 @@ module gameobject {
 			this.yDir = y;
 		}
 		
+		public KillBullet() {
+			this.timer = this.aliveTimer;
+			this.alive = false;
+		}
+		
 		public update()
 		{
 			this.timer++;
-			if (this.timer > this.aliveTimer && this.alive)
+			if (this.timer > this.aliveTimer)
 			{
 				this.alive = false;
 				this.fired = false;

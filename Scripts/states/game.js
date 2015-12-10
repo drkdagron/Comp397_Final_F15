@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -76,11 +77,27 @@ var states;
         Game.prototype.update = function () {
             this.player.update(this.bullets);
             this.controlPoint.update();
+            this.checkCollisionBulletEnemy();
             for (var x = 0; x < this.bullets.length; x++) {
                 this.bullets[x].update();
             }
             for (var y = 0; y < this.enemies.length; y++) {
                 this.enemies[y].update();
+            }
+        };
+        Game.prototype.checkCollisionBulletEnemy = function () {
+            for (var bul = 0; bul < this.bullets.length; bul++) {
+                for (var ene = 0; ene < this.enemies.length; ene++) {
+                    var l1 = 8; //bullet radius
+                    var l2 = 25;
+                    var edgeX = this.bullets[bul].x - this.enemies[ene].x;
+                    var edgeY = this.bullets[bul].y - this.enemies[ene].y;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    if (len < l1 + l2) {
+                        this.bullets[bul].KillBullet();
+                        this.enemies[ene].Hit();
+                    }
+                }
             }
         };
         return Game;

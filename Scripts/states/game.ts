@@ -94,6 +94,8 @@
             this.player.update(this.bullets);
             this.controlPoint.update();
             
+            this.checkCollisionBulletEnemy();
+            
             for (var x = 0; x < this.bullets.length; x++)
             {
                 this.bullets[x].update();
@@ -105,6 +107,26 @@
             
             
             
+        }
+        
+        private checkCollisionBulletEnemy() : void {
+            for (var bul = 0; bul < this.bullets.length; bul++)
+            {
+                for (var ene = 0; ene < this.enemies.length; ene++)
+                {
+                    var l1:number = 8; //bullet radius
+                    var l2:number = 25;
+                    var edgeX = this.bullets[bul].x - this.enemies[ene].x;
+                    var edgeY = this.bullets[bul].y - this.enemies[ene].y;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    
+                    if (len < l1+l2)
+                    {
+                        this.bullets[bul].KillBullet();
+                        this.enemies[ene].Hit();
+                    }
+                }
+            }
         }
     }
 } 
