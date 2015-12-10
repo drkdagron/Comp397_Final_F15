@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var states;
 (function (states) {
@@ -33,7 +32,8 @@ var states;
                 this.addChild(this.bullets[i]);
             }
             for (var i = 0; i < 5; i++) {
-                this.enemies[i] = new gameobject.Enemy(enemySheet, "normal", 0);
+                this.enemies[i] = new gameobject.Enemy(enemyNormalSheet, "normal1", 0);
+                this.enemies[i].gotoAndPlay("animation");
                 this.enemies[i].x = Math.floor(Math.random() * 800);
                 this.enemies[i].y = Math.floor(Math.random() * 600);
                 this.enemies[i].xDir = Math.random() * 3 - 1;
@@ -41,17 +41,21 @@ var states;
                 this.addChild(this.enemies[i]);
             }
             for (var x = 5; x < 8; x++) {
-                var rnd = Math.floor(Math.random() * 3);
+                var rnd = Math.floor(Math.random() * 4);
                 switch (rnd) {
                     case 0:
-                        this.enemies[x] = new gameobject.Enemy(enemySheet, "fast", 1);
+                        this.enemies[x] = new gameobject.Enemy(enemyFastSheet, "fast1", 1);
                         break;
                     case 1:
-                        this.enemies[x] = new gameobject.Enemy(enemySheet, "split", 2);
+                        this.enemies[x] = new gameobject.Enemy(enemySplitSheet, "split1", 2);
                         break;
                     case 2:
-                        this.enemies[x] = new gameobject.Enemy(enemySheet, "hardened", 3);
+                        this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
+                        break;
+                    case 3:
+                        this.enemies[x] = new gameobject.Enemy(enemyBossSheet, "boss1", 4);
                 }
+                this.enemies[x].gotoAndPlay("animation");
                 this.enemies[x].x = Math.floor(Math.random() * 800);
                 this.enemies[x].y = Math.floor(Math.random() * 600);
                 var dirX = Math.random() * 2 - 1;

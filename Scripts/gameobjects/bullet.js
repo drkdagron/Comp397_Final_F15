@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
@@ -10,10 +9,10 @@ var gameobject;
         __extends(Bullet, _super);
         function Bullet() {
             _super.call(this, bulletSheet, "norton");
-            this.moveSpeed = 5;
+            this.moveSpeed = 10;
             this.alive = false;
             this.fired = false;
-            this.aliveTimer = 120;
+            this.aliveTimer = 60;
             this.timer = 0;
             this.regX = 8;
             this.regY = 8;
@@ -21,7 +20,7 @@ var gameobject;
             this.y = -100;
             this.xDir = 0;
             this.yDir = 0.1;
-            this.alive = true;
+            this.alive = false;
         }
         Bullet.prototype.direction = function (x, y) {
             this.xDir = x;
@@ -39,7 +38,7 @@ var gameobject;
                 this.x += this.xDir * this.moveSpeed;
                 this.y += this.yDir * this.moveSpeed;
             }
-            this.rotation += 30;
+            this.rotation += 60;
         };
         return Bullet;
     })(createjs.Sprite);

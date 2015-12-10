@@ -46,6 +46,7 @@ var manifest = [
     { id: "bg", src: "../../Assets/audio/pkmn_route1.mp3" },
     { id: "hit", src: "../../Assets/audio/thunder.ogg" },
     { id: "pickup", src: "../../Assets/audio/pickup4.ogg"},
+    { id: "bullet", src: "../../Assets/audio/bullet.mp3"}
 ];
 
 var playerSheet: createjs.SpriteSheet;
@@ -65,27 +66,98 @@ var playerData = {
 };
 
 
-var enemySheet: createjs.SpriteSheet;
-var enemyData = {
+var enemyNormalSheet: createjs.SpriteSheet;
+var enemyNormalData = {
 
 "images": [
-    "../../Assets/images/enemies/atlas.png"
+    "../../Assets/images/enemies/normalAtlas.png"
+],
+
+"frames": [
+    [0, 0, 50, 50, 0, 0, 0],
+    [50, 0, 50, 50, 0, 0, 0],
+    [100, 0, 50, 50, 0, 0, 0],
+    [150, 0, 50, 50, 0, 0, 0],
+    [200, 0, 50, 50, 0, 0, 0],
+    [250, 0, 50, 50, 0, 0, 0]
+],
+
+"animations": {
+    "animation": [0, 5]
+},
+};
+
+var enemyFastSheet: createjs.SpriteSheet;
+var enemyFastData = {
+
+"images": [
+    "../../Assets/images/enemies/fastAtlas.png"
+],
+
+"frames": [
+    [0, 0, 50, 50, 0, 0, 0],
+    [50, 0, 50, 50, 0, 0, 0],
+    [100, 0, 50, 50, 0, 0, 0],
+    [150, 0, 50, 50, 0, 0, 0]
+],
+
+"animations": {
+    "animation": [0, 3]
+},
+};
+
+var enemyHardenedSheet: createjs.SpriteSheet;
+var enemyHardenedData = {
+
+"images": [
+    "../../Assets/images/enemies/hardenedAtlas.png"
+],
+
+"frames": [
+    [0, 0, 50, 50, 0, 0, 0],
+    [50, 0, 50, 50, 0, 0, 0],
+    [100, 0, 50, 50, 0, 0, 0],
+    [150, 0, 50, 50, 0, 0, 0]
+],
+
+"animations": {
+    "animation": [0, 3]
+},
+};
+
+var enemySplitSheet: createjs.SpriteSheet;
+var enemySplitData = {
+
+"images": [
+    "../../Assets/images/enemies/splitAtlas.png"
+],
+
+"frames": [
+    [0, 0, 50, 50, 0, 0, 0],
+    [50, 0, 50, 50, 0, 0, 0],
+    [100, 0, 50, 50, 0, 0, 0]
+],
+
+"animations": {
+    "animation": [0, 2]
+},
+};
+
+var enemyBossSheet: createjs.SpriteSheet;
+var enemyBossData = {
+
+"images": [
+    "../../Assets/images/enemies/bossAtlas.png"
 ],
 
 "frames": [
     [0, 0, 100, 100, 0, 0, 0],
     [100, 0, 100, 100, 0, 0, 0],
-    [200, 0, 100, 100, 0, 0, 0],
-    [300, 0, 100, 100, 0, 0, 0],
-    [400, 0, 100, 100, 0, 0, 0]
+    [200, 0, 100, 100, 0, 0, 0]
 ],
 
 "animations": {
-    "split": [0],
-    "normal": [1],
-    "hardened": [2],
-    "fast": [3],
-    "boss": [4]
+    "animation": [0, 2]
 },
 };
 
@@ -129,7 +201,7 @@ var controlPointData = {
   ],
     
   "frames": [
-    [0,0,91,91,0,0,0]
+    [0,0,100,100,0,0,0]
   ],
   
   "animations": {
@@ -167,7 +239,11 @@ function preload(): void{
     assets.loadManifest(manifest);
     
     playerSheet = new createjs.SpriteSheet(playerData);
-    enemySheet = new createjs.SpriteSheet(enemyData);
+    enemyNormalSheet = new createjs.SpriteSheet(enemyNormalData);
+    enemyFastSheet = new createjs.SpriteSheet(enemyFastData);
+    enemyHardenedSheet = new createjs.SpriteSheet(enemyHardenedData);
+    enemySplitSheet = new createjs.SpriteSheet(enemySplitData);
+    enemyBossSheet = new createjs.SpriteSheet(enemyBossData);                
     worldSheet = new createjs.SpriteSheet(worldData);
     bulletSheet = new createjs.SpriteSheet(bulletData);
     uiSheet = new createjs.SpriteSheet(uiData);
@@ -180,7 +256,7 @@ function init():void {
     canvas = document.getElementById("canvas"); // reference to canvas element
     stage = new createjs.Stage(canvas); // passing canvas to stage
     stage.enableMouseOver(20); // enable mouse events
-    createjs.Ticker.setFPS(60); // set frame rate to 60 fps
+    createjs.Ticker.setFPS(30); // set frame rate to 60 fps
     createjs.Ticker.on("tick", gameLoop); // update gameLoop every frame
     setupStats(); // sets up our stats counting
 

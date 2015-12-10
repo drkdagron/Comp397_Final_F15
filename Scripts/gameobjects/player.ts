@@ -1,7 +1,7 @@
 module gameobject
 {
 	export class Player extends createjs.Sprite{	
-		private speed:number = 3;
+		private speed:number = 6;
 		private defaultTurnRate:number = 3.5;
 		private lives: number = 5;
 		
@@ -10,7 +10,7 @@ module gameobject
 		
 		private firing: boolean = false;
 		private fireTimer: number = 0;
-		private fireRate: number = 30;
+		private fireRate: number = 15;
 		
 		constructor(sheet:createjs.SpriteSheet, frame:string)
 		{
@@ -155,6 +155,7 @@ module gameobject
 					coin[i].x = this.x;
 					coin[i].y = this.y;
 					this.fireTimer =0 ;
+					createjs.Sound.play("bullet");
 					return;
 				}
 				
@@ -181,11 +182,11 @@ module gameobject
 			
 			if (config.MOVE_LEFT)
 			{
-				this.rotate(-3);
+				this.rotate(-6);
 			}
 			if (config.MOVE_RIGHT)
 			{
-				this.rotate(3);
+				this.rotate(6);
 			}
 			if (config.MOVE_UP)
 			{

@@ -9,14 +9,14 @@ var gameobject;
         __extends(Player, _super);
         function Player(sheet, frame) {
             _super.call(this, sheet, frame);
-            this.speed = 3;
+            this.speed = 6;
             this.defaultTurnRate = 3.5;
             this.lives = 5;
             this.score = 0;
             this.coins = [];
             this.firing = false;
             this.fireTimer = 0;
-            this.fireRate = 30;
+            this.fireRate = 15;
             this.setBounds(0, 0, 50, 38);
             this.regX = 50 / 2;
             this.regY = 38 / 2;
@@ -122,6 +122,7 @@ var gameobject;
                     coin[i].x = this.x;
                     coin[i].y = this.y;
                     this.fireTimer = 0;
+                    createjs.Sound.play("bullet");
                     return;
                 }
             }
@@ -139,10 +140,10 @@ var gameobject;
                 this.Bang(coin);
             }
             if (config.MOVE_LEFT) {
-                this.rotate(-3);
+                this.rotate(-6);
             }
             if (config.MOVE_RIGHT) {
-                this.rotate(3);
+                this.rotate(6);
             }
             if (config.MOVE_UP) {
                 this.move(this.speed);

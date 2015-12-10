@@ -3,11 +3,11 @@ module gameobject {
 		
 		private scoreVal:number;
 		
-		private moveSpeed: number = 5;
+		private moveSpeed: number = 10;
 		
 		public alive: boolean = false;
 		public fired: boolean = false;
-		public aliveTimer: number = 120;
+		public aliveTimer: number = 60;
 		public timer: number = 0;
 		
 		public xDir:number;
@@ -25,7 +25,7 @@ module gameobject {
 			this.xDir = 0;
 			this.yDir = 0.1;
 			
-			this.alive = true;
+			this.alive = false;
 		}
 		
 		public direction(x:number, y:number): void {
@@ -50,7 +50,7 @@ module gameobject {
 				this.y += this.yDir * this.moveSpeed;
 				
 			}
-			this.rotation += 30;
+			this.rotation += 60;
 		}
 	}
 }

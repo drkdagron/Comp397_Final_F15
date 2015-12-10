@@ -36,6 +36,10 @@ module gameobject{
 				//hardened/heavy enemy
 					this.moveSpeed = 1;
 					this.lives = 5;
+					break;
+				case 4:
+					//boss
+					this.lives = 10;
 			}
 		}
 		
