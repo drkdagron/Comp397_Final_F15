@@ -22,6 +22,12 @@
             this.background = new gameobject.World(worldSheet, "background");
             this.addChild(this.background);
             
+            this.title = new objects.Label("1337 Bug Zapperz", "36px Consolas", "#FFFFFF", 400, 50);
+            this.addChild(this.title);
+            
+            this.howTo = new objects.Label("Destroy all the bugs before\n\nthey destroy your control point!", "24px Consolas" ,"#FFFFFF", 400, 120);
+            this.addChild(this.howTo);
+            
             this.play = new gameobject.UiButton(uiSheet, "play", 400, 400);
             this.play.on("click", this.startGame, this);
             this.addChild(this.play);
@@ -37,6 +43,5 @@
         public update(): void {
         }
     }
-
 
 }
