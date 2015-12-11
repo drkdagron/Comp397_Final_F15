@@ -35,6 +35,7 @@ var currentState: objects.Scene; // alias for our current state
 var menu: states.Menu;
 var game: states.Game;
 var over: states.Over;
+var instruc: states.Instruction;
 
 var score:number;
 
@@ -220,12 +221,14 @@ var uiData = {
     [0,0,190,49,0,0,0], 
     [0,49,190,49,0,0,0],
     [0,98,190,49,0,0,0],
+    [0,146,190,49,0,0,0],
   ],
   
   "animations": {
     "play": [0],
     "restart": [1],
     "menu": [2],
+    "back": [3],
   },
 };
 
@@ -296,6 +299,11 @@ function changeState(state): void {
             stage.removeAllChildren();
             menu = new states.Menu();
             currentState = menu;
+            break;
+            case config.INSTRC_STATE:
+            stage.removeAllChildren();
+            instruc = new states.Instruction();
+            currentState = instruc;
             break;
         case config.PLAY_STATE:
             // show the play scene

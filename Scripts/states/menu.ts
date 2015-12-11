@@ -8,6 +8,7 @@
 
         private background: gameobject.World;
         
+        private instr: gameobject.UiButton;
         private play: gameobject.UiButton;
 
         // CONSTRUCTOR
@@ -28,11 +29,19 @@
             this.howTo = new objects.Label("Destroy all the bugs before\n\nthey destroy your control point!", "24px Consolas" ,"#FFFFFF", 400, 120);
             this.addChild(this.howTo);
             
+            this.instr = new gameobject.UiButton(uiSheet, "back", 400, 500);
+            this.instr.on("instruction", this.instruction, this);
+            this.addChild(this.instr);
+            
             this.play = new gameobject.UiButton(uiSheet, "play", 400, 400);
             this.play.on("click", this.startGame, this);
             this.addChild(this.play);
             
             stage.addChild(this);
+        }
+
+        private instruction() : void {
+            changeState(config.INSTRC_STATE);
         }
 
         private startGame() : void 
