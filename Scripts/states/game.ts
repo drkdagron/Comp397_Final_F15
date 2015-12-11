@@ -154,8 +154,8 @@
             {
                 if (this.enemies[ene].typeID == 4)
                 {
-                    var edgeX = this.player.x - this.enemies[ene].x + 50;
-                    var edgeY = this.player.y - this.enemies[ene].y + 50;
+                    var edgeX = this.player.x - this.enemies[ene].x + 25;
+                    var edgeY = this.player.y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     
                     if (len < 25 + 50)

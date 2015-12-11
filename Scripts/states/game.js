@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -116,8 +117,8 @@ var states;
         Game.prototype.checkCollisionEnemyPlayer = function () {
             for (var ene = 0; ene < this.enemies.length; ene++) {
                 if (this.enemies[ene].typeID == 4) {
-                    var edgeX = this.player.x - this.enemies[ene].x + 50;
-                    var edgeY = this.player.y - this.enemies[ene].y + 50;
+                    var edgeX = this.player.x - this.enemies[ene].x + 25;
+                    var edgeY = this.player.y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     if (len < 25 + 50) {
                         this.player.Kill();
