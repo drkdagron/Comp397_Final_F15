@@ -4,6 +4,7 @@ var config;
     config.MENU_STATE = 0;
     config.PLAY_STATE = 1;
     config.OVER_STATE = 2;
+    config.INSTRC_STATE = 3;
     config.MOVE_LEFT = false;
     config.MOVE_RIGHT = false;
     config.MOVE_UP = false;

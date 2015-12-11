@@ -38,6 +38,10 @@ var over: states.Over;
 var instruc: states.Instruction;
 
 var score:number;
+var NORMAL_ENEMY_COUNT: number = 3;
+var SPECIAL_ENEMY_COUNT: number = 2;
+var CONTROL_POINT_COUNT: number = 1;
+var CURRENT_LEVEL: number = 0;
 
 var background:createjs.Sound;
 

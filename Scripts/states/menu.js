@@ -21,10 +21,16 @@ var states;
             this.addChild(this.title);
             this.howTo = new objects.Label("Destroy all the bugs before\n\nthey destroy your control point!", "24px Consolas", "#FFFFFF", 400, 120);
             this.addChild(this.howTo);
+            this.instr = new gameobject.UiButton(uiSheet, "back", 400, 500);
+            this.instr.on("instruction", this.instruction, this);
+            this.addChild(this.instr);
             this.play = new gameobject.UiButton(uiSheet, "play", 400, 400);
             this.play.on("click", this.startGame, this);
             this.addChild(this.play);
             stage.addChild(this);
+        };
+        Menu.prototype.instruction = function () {
+            changeState(config.INSTRC_STATE);
         };
         Menu.prototype.startGame = function () {
             changeState(config.PLAY_STATE);

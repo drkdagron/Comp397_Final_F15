@@ -15,6 +15,9 @@ var states;
             this.floor = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan..................................................";
             this.tileSize = 70;
             this.startingY = canvas.clientHeight - 55;
+            this.shipLives = 3;
+            this.compLives = 5;
+            this.controlPoints = [];
             this.enemies = [];
             this.bullets = [];
         }
@@ -23,15 +26,17 @@ var states;
             console.log("game state started");
             this.world = new gameobject.World(worldSheet, "background");
             this.addChild(this.world);
-            this.controlPoint = new gameobject.ControlPoint(controlPointSheet, "controlPoint");
-            this.controlPoint.x = Math.floor(Math.random() * 650 + 100);
-            this.controlPoint.y = Math.floor(Math.random() * 450 + 100);
-            this.addChild(this.controlPoint);
+            for (var i = 0; i < CONTROL_POINT_COUNT; i++) {
+                this.controlPoints[i] = new gameobject.ControlPoint(controlPointSheet, "controlPoint");
+                this.controlPoints[i].x = Math.floor(Math.random() * 650 + 100);
+                this.controlPoints[i].y = Math.floor(Math.random() * 450 + 100);
+                this.addChild(this.controlPoints[i]);
+            }
             for (var i = 0; i < 4; i++) {
                 this.bullets[i] = new gameobject.Bullet();
                 this.addChild(this.bullets[i]);
             }
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < NORMAL_ENEMY_COUNT; i++) {
                 this.enemies[i] = new gameobject.Enemy(enemyNormalSheet, "normal1", 0);
                 this.enemies[i].gotoAndPlay("animation");
                 this.enemies[i].x = Math.floor(Math.random() * 800);
@@ -40,8 +45,8 @@ var states;
                 this.enemies[i].yDir = Math.random() * 3 - 1;
                 this.addChild(this.enemies[i]);
             }
-            for (var x = 5; x < 8; x++) {
-                var rnd = Math.floor(Math.random() * 4);
+            for (var x = NORMAL_ENEMY_COUNT; x < NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT; x++) {
+                var rnd = Math.floor(Math.random() * 3);
                 switch (rnd) {
                     case 0:
                         this.enemies[x] = new gameobject.Enemy(enemyFastSheet, "fast1", 1);
@@ -51,9 +56,6 @@ var states;
                         break;
                     case 2:
                         this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
-                        break;
-                    case 3:
-                        this.enemies[x] = new gameobject.Enemy(enemyBossSheet, "boss1", 4);
                 }
                 this.enemies[x].gotoAndPlay("animation");
                 this.enemies[x].x = Math.floor(Math.random() * 800);
@@ -67,9 +69,9 @@ var states;
             this.player = new gameobject.Player(playerSheet, "ship");
             this.player.setPosition(75, 240);
             this.addChild(this.player);
-            this.cpLives = new objects.Label("Computer Lives: " + this.controlPoint.getLives(), "24px Consolas", "#FFF", 125, 20);
-            this.addChild(this.cpLives);
-            this.pLives = new objects.Label("Ship Lives: " + this.player.getLives(), "24px Consolas", "#FFF", 425, 20);
+            this.cLives = new objects.Label("Computer Lives: " + this.compLives, "24px Consolas", "#FFF", 135, 20);
+            this.addChild(this.cLives);
+            this.pLives = new objects.Label("Ship Lives: " + this.shipLives, "24px Consolas", "#FFF", 435, 20);
             this.addChild(this.pLives);
             this.score = new objects.Label("Score: " + this.player.getScore(), "24px Consolas", "#FFF", 675, 20);
             this.addChild(this.score);
@@ -77,7 +79,6 @@ var states;
         };
         Game.prototype.update = function () {
             this.player.update(this.bullets);
-            this.controlPoint.update();
             this.checkCollisionBulletEnemy();
             this.checkCollisionEnemyPlayer();
             this.checkCollisionEnemyControlPoint();
@@ -87,27 +88,64 @@ var states;
             for (var y = 0; y < this.enemies.length; y++) {
                 this.enemies[y].update();
             }
-            this.cpLives.text = "Computer Lives: " + this.controlPoint.getLives();
-            this.pLives.text = "Ship Lives: " + this.player.getLives();
-            this.score.text = "Score: " + this.player.getScore();
+            for (var z = 0; z < this.controlPoints.length; z++) {
+                this.controlPoints[z].update();
+            }
+            if (this.compLives <= 0 || this.shipLives <= 0) {
+                this.cLives.text = "GAME OVER";
+                this.pLives.text = "GAME OVER";
+                this.score.text = "GAME OVER";
+            }
+            else {
+                this.cLives.text = "Computer Lives: " + this.compLives;
+                this.pLives.text = "Ship Lives: " + this.shipLives;
+                this.score.text = "Score: " + this.player.getScore();
+            }
+            if (this.allEnemiesDestroyed()) {
+                //add level reset here
+                CURRENT_LEVEL++;
+                if (CURRENT_LEVEL % 3 == 0) {
+                    CONTROL_POINT_COUNT++;
+                    NORMAL_ENEMY_COUNT = 3;
+                    SPECIAL_ENEMY_COUNT = 2;
+                    this.stage.removeAllChildren();
+                    this.start();
+                }
+                NORMAL_ENEMY_COUNT++;
+                SPECIAL_ENEMY_COUNT++;
+                this.stage.removeAllChildren();
+                this.start();
+            }
+        };
+        Game.prototype.allEnemiesDestroyed = function () {
+            for (var ene2 = 0; ene2 < this.enemies.length; ene2++) {
+                if (this.enemies[ene2].getAlive() == true)
+                    return false;
+            }
+            return true;
         };
         Game.prototype.checkCollisionEnemyControlPoint = function () {
             for (var ene = 0; ene < this.enemies.length; ene++) {
-                if (this.enemies[ene].typeID == 4) {
-                    var edgeX = this.controlPoint.x - this.enemies[ene].x;
-                    var edgeY = this.controlPoint.y - this.enemies[ene].y;
-                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                    if (len < 50 + 50) {
-                        this.controlPoint.Kill();
+                for (var cp = 0; cp < this.controlPoints.length; cp++) {
+                    if (this.enemies[ene].typeID == 4) {
+                        var edgeX = this.controlPoints[cp].x - this.enemies[ene].x;
+                        var edgeY = this.controlPoints[cp].y - this.enemies[ene].y;
+                        var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                        if (len < 50 + 50) {
+                            this.compLives--;
+                            this.controlPoints[cp].Kill();
+                            this.enemies[ene].Kill();
+                        }
                     }
-                }
-                else {
-                    var edgeX = this.controlPoint.x - this.enemies[ene].x + 25;
-                    var edgeY = this.controlPoint.y - this.enemies[ene].y + 25;
-                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                    if (len < 50 + 25) {
-                        this.controlPoint.Hit();
-                        this.enemies[ene].Kill();
+                    else {
+                        var edgeX = this.controlPoints[cp].x - this.enemies[ene].x + 25;
+                        var edgeY = this.controlPoints[cp].y - this.enemies[ene].y + 25;
+                        var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                        if (len < 50 + 25) {
+                            this.compLives--;
+                            this.controlPoints[cp].Hit();
+                            this.enemies[ene].Kill();
+                        }
                     }
                 }
             }
@@ -127,6 +165,7 @@ var states;
                     var edgeY = this.player.y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     if (len < 25 + 25) {
+                        this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
                         if (this.enemies[ene].typeID == 0) {

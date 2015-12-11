@@ -15,10 +15,10 @@ var gameobject;
             this.regY = 50;
         }
         ControlPoint.prototype.Hit = function () {
-            if (this.lives > 1) {
+            if (this.lives > 0) {
                 this.lives--;
             }
-            else {
+            if (this.lives == 0) {
                 this.alive = false;
                 this.x = -100;
                 this.y = 100;

@@ -57,11 +57,12 @@ module gameobject{
 		
 		public Hit(): void
 		{
-			if (this.lives > 1)
+			if (this.lives > 0)
 			{
 				this.lives--;
 			}
-			else
+			
+			if (this.lives == 0)
 			{
 				this.alive = false;
 				this.x = -100;

@@ -29,7 +29,12 @@ var currentState; // alias for our current state
 var menu;
 var game;
 var over;
+var instruc;
 var score;
+var NORMAL_ENEMY_COUNT = 3;
+var SPECIAL_ENEMY_COUNT = 2;
+var CONTROL_POINT_COUNT = 1;
+var CURRENT_LEVEL = 0;
 var background;
 // manifest of all our assets
 var manifest = [
@@ -171,11 +176,13 @@ var uiData = {
         [0, 0, 190, 49, 0, 0, 0],
         [0, 49, 190, 49, 0, 0, 0],
         [0, 98, 190, 49, 0, 0, 0],
+        [0, 146, 190, 49, 0, 0, 0],
     ],
     "animations": {
         "play": [0],
         "restart": [1],
         "menu": [2],
+        "back": [3],
     },
 };
 function preload() {
@@ -230,6 +237,11 @@ function changeState(state) {
             stage.removeAllChildren();
             menu = new states.Menu();
             currentState = menu;
+            break;
+        case config.INSTRC_STATE:
+            stage.removeAllChildren();
+            instruc = new states.Instruction();
+            currentState = instruc;
             break;
         case config.PLAY_STATE:
             // show the play scene
