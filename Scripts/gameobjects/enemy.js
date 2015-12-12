@@ -16,6 +16,9 @@ var gameobject;
             this.yBuffer = 20;
             this.alive = false;
             this.lives = 0;
+            this.diveBombTimer = 150;
+            this.diveTimer = 0;
+            this.diving = false;
             this.type = "normal";
             this.typeID = 0; //0 - normal, 1 - fast, 2 - heavy, 3 - split, 4 - boss
             this.regX = 50;
@@ -67,6 +70,11 @@ var gameobject;
         };
         Enemy.prototype.update = function () {
             if (this.alive) {
+                this.diveTimer++;
+                if (this.diveTimer > this.diveBombTimer)
+                    this.diving = true;
+                else
+                    this.diving = false;
                 this.move(this.xDir, this.yDir);
                 if (this.x < 0 - 40) {
                     this.x = 840;

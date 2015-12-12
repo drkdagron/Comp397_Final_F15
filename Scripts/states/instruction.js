@@ -22,7 +22,7 @@ var states;
             this.addChild(this.title);
             this.howTo = new objects.Label("A/D - Rotate ship\n\nW - Move Forward\n\nS - Move Backward\n\nSpace - Fire Weapon", "24px Consolas", "#FFFFFF", 400, 150);
             this.addChild(this.howTo);
-            this.howTo2 = new objects.Label("Destroy the enemy bugs before they\n\ndestroy your control point", "24px Consolas", "#FFFFFF", 400, 275);
+            this.howTo2 = new objects.Label("Destroy the enemy bugs before they\n\ndestroy your control point!", "24px Consolas", "#FFFFFF", 400, 275);
             this.addChild(this.howTo2);
             this.back = new gameobject.UiButton(uiSheet, "back", 400, 500);
             this.back.on("click", this.startGame, this);

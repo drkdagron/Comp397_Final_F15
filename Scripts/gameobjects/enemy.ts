@@ -10,6 +10,10 @@ module gameobject{
 		private alive:boolean = false;
 		private lives: number = 0;
 		
+		private diveBombTimer:number = 150;
+		private diveTimer: number = 0;
+		public diving: boolean = false;
+		
 		private type:string = "normal";
 		public typeID:number = 0; //0 - normal, 1 - fast, 2 - heavy, 3 - split, 4 - boss
 		
@@ -81,6 +85,12 @@ module gameobject{
 		{
 			if (this.alive)
 			{
+				this.diveTimer++;
+				if (this.diveTimer > this.diveBombTimer)
+					this.diving = true;
+				else
+					this.diving = false;
+					
 				this.move(this.xDir, this.yDir);
 				
 				if (this.x < 0 - 40)

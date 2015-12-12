@@ -88,6 +88,16 @@ var states;
             }
             for (var y = 0; y < this.enemies.length; y++) {
                 this.enemies[y].update();
+                if (this.enemies[y].diving) {
+                    var ctlP = this.findClosestControlPoint(this.enemies[y].x, this.enemies[y].y);
+                    var edgeX = this.enemies[y].x - this.controlPoints[ctlP].x;
+                    var edgeY = this.enemies[y].y - this.controlPoints[ctlP].y;
+                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                    edgeX /= len;
+                    edgeY /= len;
+                    this.enemies[y].xDir = -edgeX;
+                    this.enemies[y].yDir = -edgeY;
+                }
             }
             for (var z = 0; z < this.controlPoints.length; z++) {
                 this.controlPoints[z].update();
@@ -119,6 +129,20 @@ var states;
                 this.stage.removeAllChildren();
                 this.start();
             }
+        };
+        Game.prototype.findClosestControlPoint = function (x, y) {
+            var num = 0;
+            var min = 100000000;
+            for (var ctl = 0; ctl < this.controlPoints.length; ctl++) {
+                var edgeX = this.controlPoints[ctl].x - x;
+                var edgeY = this.controlPoints[ctl].y - y;
+                var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                if (len < min) {
+                    num = ctl;
+                    min = len;
+                }
+            }
+            return num;
         };
         Game.prototype.allEnemiesDestroyed = function () {
             for (var ene2 = 0; ene2 < this.enemies.length; ene2++) {
