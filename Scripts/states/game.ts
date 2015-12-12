@@ -277,16 +277,21 @@
                     
                     if (len < 25+25)
                     {
+                        var oldX, oldY;
+                        oldX = this.enemies[ene].x;
+                        oldY = this.enemies[ene].y;
                         this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
-                        this.spawnParticles(this.enemies[ene].x, this.enemies[ene].y);
+                        
                         if (this.enemies[ene].typeID == 0)
                         {
+                            this.spawnParticles(oldX, oldY);
                             this.player.addScore(1000);
                         }
                         else
                         {
+                            this.spawnParticles(oldX,oldY);
                             this.player.addScore(1500);
                         }
                     }
