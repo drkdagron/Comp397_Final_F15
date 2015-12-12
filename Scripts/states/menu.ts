@@ -29,8 +29,8 @@
             this.howTo = new objects.Label("Destroy all the bugs before\n\nthey destroy your control point!", "24px Consolas" ,"#FFFFFF", 400, 120);
             this.addChild(this.howTo);
             
-            this.instr = new gameobject.UiButton(uiSheet, "back", 400, 500);
-            this.instr.on("instruction", this.instruction, this);
+            this.instr = new gameobject.UiButton(uiSheet, "instruction", 400, 500);
+            this.instr.on("click", this.instruction, this);
             this.addChild(this.instr);
             
             this.play = new gameobject.UiButton(uiSheet, "play", 400, 400);
@@ -41,6 +41,7 @@
         }
 
         private instruction() : void {
+            console.log("Instruction Button Hit");
             changeState(config.INSTRC_STATE);
         }
 

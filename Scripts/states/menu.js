@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -21,8 +22,8 @@ var states;
             this.addChild(this.title);
             this.howTo = new objects.Label("Destroy all the bugs before\n\nthey destroy your control point!", "24px Consolas", "#FFFFFF", 400, 120);
             this.addChild(this.howTo);
-            this.instr = new gameobject.UiButton(uiSheet, "back", 400, 500);
-            this.instr.on("instruction", this.instruction, this);
+            this.instr = new gameobject.UiButton(uiSheet, "instruction", 400, 500);
+            this.instr.on("click", this.instruction, this);
             this.addChild(this.instr);
             this.play = new gameobject.UiButton(uiSheet, "play", 400, 400);
             this.play.on("click", this.startGame, this);
@@ -30,6 +31,7 @@ var states;
             stage.addChild(this);
         };
         Menu.prototype.instruction = function () {
+            console.log("Instruction Button Hit");
             changeState(config.INSTRC_STATE);
         };
         Menu.prototype.startGame = function () {

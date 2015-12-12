@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -95,6 +96,8 @@ var states;
                 this.cLives.text = "GAME OVER";
                 this.pLives.text = "GAME OVER";
                 this.score.text = "GAME OVER";
+                pScore = this.player.getScore();
+                changeState(config.OVER_STATE);
             }
             else {
                 this.cLives.text = "Computer Lives: " + this.compLives;

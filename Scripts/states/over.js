@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -18,14 +19,14 @@ var states;
             console.log("over state started");
             this.background = new gameobject.World(worldSheet, "world");
             this.addChild(this.background);
-            this.gameover = new objects.Label("GAME OVER!!!", "40px Consolas", "#222", 320, 125);
+            this.gameover = new objects.Label("GAME OVER!!!", "40px Consolas", "#EEE", 400, 125);
             this.addChild(this.gameover);
-            this.score = new objects.Label("Your Score: " + score.toString(), "24px Consolas", "#222", 320, 180);
+            this.score = new objects.Label("Your Score: " + pScore.toString(), "24px Consolas", "#EEE", 400, 180);
             this.addChild(this.score);
-            this.againButton = new gameobject.UiButton(uiSheet, "restart", 320, 300);
+            this.againButton = new gameobject.UiButton(uiSheet, "restart", 400, 300);
             this.againButton.on("click", this.playAgain, this);
             this.addChild(this.againButton);
-            this.backButton = new gameobject.UiButton(uiSheet, "menu", 320, 380);
+            this.backButton = new gameobject.UiButton(uiSheet, "menu", 400, 380);
             this.backButton.on("click", this.backMenu, this);
             this.addChild(this.backButton);
             stage.addChild(this);
@@ -37,7 +38,6 @@ var states;
             changeState(config.MENU_STATE);
         };
         Over.prototype.update = function () {
-            this.background.update();
         };
         return Over;
     })(objects.Scene);

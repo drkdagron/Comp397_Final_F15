@@ -12,6 +12,7 @@
 /// <reference path="../states/over.ts" />
 /// <reference path="../states/game.ts" />
 /// <reference path="../states/menu.ts" />
+/// <reference path="../states/instruction.ts" />
 /// <reference path="../gameobjects/UiButton.ts" />
 /// <reference path="../gameobjects/bullet.ts" />
 /// <reference path="../gameobjects/enemy.ts" />
@@ -25,6 +26,7 @@ var stage;
 var stats;
 var state;
 var currentState; // alias for our current state
+var pScore;
 // GAME OBJECTS
 var menu;
 var game;
@@ -177,12 +179,14 @@ var uiData = {
         [0, 49, 190, 49, 0, 0, 0],
         [0, 98, 190, 49, 0, 0, 0],
         [0, 146, 190, 49, 0, 0, 0],
+        [0, 195, 190, 49, 0, 0, 0],
     ],
     "animations": {
         "play": [0],
         "restart": [1],
         "menu": [2],
         "back": [3],
+        "instruction": [4],
     },
 };
 function preload() {

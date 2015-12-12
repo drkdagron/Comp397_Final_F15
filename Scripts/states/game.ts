@@ -122,6 +122,8 @@
                 this.cLives.text = "GAME OVER";
                 this.pLives.text = "GAME OVER";
                 this.score.text = "GAME OVER"; 
+                pScore = this.player.getScore();
+                changeState(config.OVER_STATE);
             }
             else
             {

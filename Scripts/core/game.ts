@@ -15,6 +15,7 @@
 /// <reference path="../states/over.ts" />
 /// <reference path="../states/game.ts" />
 /// <reference path="../states/menu.ts" />
+/// <reference path="../states/instruction.ts" />
 
 /// <reference path="../gameobjects/UiButton.ts" />
 /// <reference path="../gameobjects/bullet.ts" />
@@ -30,6 +31,7 @@ var stage: createjs.Stage;
 var stats: Stats;
 var state: number;
 var currentState: objects.Scene; // alias for our current state
+var pScore: number;
 
 // GAME OBJECTS
 var menu: states.Menu;
@@ -226,6 +228,7 @@ var uiData = {
     [0,49,190,49,0,0,0],
     [0,98,190,49,0,0,0],
     [0,146,190,49,0,0,0],
+    [0,195,190,49,0,0,0],
   ],
   
   "animations": {
@@ -233,6 +236,7 @@ var uiData = {
     "restart": [1],
     "menu": [2],
     "back": [3],
+    "instruction": [4],
   },
 };
 
