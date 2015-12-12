@@ -108,10 +108,10 @@ module gameobject
 		private move(x:number)
 		{
 			var radian = this.rotation * (Math.PI/180);
-			console.log(this.rotation);
+			//console.log(this.rotation);
 			var eX = Math.cos(radian + Math.PI/2);
 			var eY = Math.sin(radian + Math.PI/2);
-			console.log(eX + "\t" + eY);
+			//console.log(eX + "\t" + eY);
 			this.x -= eX * x;
 			this.y -= eY * x;
 		}

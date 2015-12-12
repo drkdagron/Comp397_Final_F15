@@ -10,7 +10,7 @@ module gameobject{
 		private alive:boolean = false;
 		private lives: number = 0;
 		
-		private diveBombTimer:number = 150;
+		private diveBombTimer:number = 1500;
 		private diveTimer: number = 0;
 		public diving: boolean = false;
 		

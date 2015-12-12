@@ -21,6 +21,7 @@ var states;
             this.controlPoints = [];
             this.enemies = [];
             this.bullets = [];
+            this.particles = [];
         }
         // PUBLIC METHODS
         Game.prototype.start = function () {
@@ -32,6 +33,10 @@ var states;
                 this.controlPoints[i].x = Math.floor(Math.random() * 650 + 100);
                 this.controlPoints[i].y = Math.floor(Math.random() * 450 + 100);
                 this.addChild(this.controlPoints[i]);
+            }
+            for (var i = 0; i < 24; i++) {
+                this.particles[i] = new gameobject.Particle();
+                this.addChild(this.particles[i]);
             }
             for (var i = 0; i < 4; i++) {
                 this.bullets[i] = new gameobject.Bullet();
@@ -78,11 +83,25 @@ var states;
             this.addChild(this.score);
             stage.addChild(this);
         };
+        Game.prototype.spawnParticles = function (x, y) {
+            var count = 0;
+            for (var q = 0; q < this.particles.length; q++) {
+                if (this.particles[q].alive == false) {
+                    this.particles[q].spawnDirection(x, y);
+                    count++;
+                    if (count > 4)
+                        return;
+                }
+            }
+        };
         Game.prototype.update = function () {
             this.player.update(this.bullets);
             this.checkCollisionBulletEnemy();
             this.checkCollisionEnemyPlayer();
             this.checkCollisionEnemyControlPoint();
+            for (var p = 0; p < this.particles.length; p++) {
+                this.particles[p].update();
+            }
             for (var x = 0; x < this.bullets.length; x++) {
                 this.bullets[x].update();
             }
@@ -195,6 +214,7 @@ var states;
                         this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
+                        this.spawnParticles(this.enemies[ene].x, this.enemies[ene].y);
                         if (this.enemies[ene].typeID == 0) {
                             this.player.addScore(1000);
                         }
@@ -213,10 +233,14 @@ var states;
                         var edgeY = this.bullets[bul].y - this.enemies[ene].y;
                         var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                         if (len < 8 + 50) {
+                            var oldX, oldY;
+                            oldX = this.enemies[ene].x;
+                            oldY = this.enemies[ene].y;
                             this.bullets[bul].KillBullet();
                             this.enemies[ene].Hit();
                             if (!this.enemies[ene].getAlive()) {
                                 this.player.addScore(2500);
+                                this.spawnParticles(oldX, oldY);
                             }
                         }
                     }
@@ -225,9 +249,13 @@ var states;
                         var edgeY = this.bullets[bul].y - this.enemies[ene].y + 25;
                         var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                         if (len < 8 + 25) {
+                            var oldX, oldY;
+                            oldX = this.enemies[ene].x;
+                            oldY = this.enemies[ene].y;
                             this.bullets[bul].KillBullet();
                             this.enemies[ene].Hit();
                             if (!this.enemies[ene].getAlive()) {
+                                this.spawnParticles(oldX, oldY);
                                 if (this.enemies[ene].typeID == 0) {
                                     this.player.addScore(1000);
                                 }

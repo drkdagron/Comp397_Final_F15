@@ -19,6 +19,7 @@
 /// <reference path="../gameobjects/world.ts" />
 /// <reference path="../gameobjects/player.ts" />
 /// <reference path="../gameobjects/controlpoint.ts" />
+/// <reference path="../gameobjects/particle.ts" />
 // GLOBAL GAME FRAMEWORK VARIABLES
 var assets;
 var canvas;
@@ -88,6 +89,18 @@ var enemyFastData = {
     ],
     "animations": {
         "animation": [0, 3]
+    },
+};
+var particleSheet;
+var particleData = {
+    "images": [
+        "../../Assets/images/particle/atlas.png"
+    ],
+    "frames": [
+        [0, 0, 8, 8, 0, 0, 0],
+    ],
+    "animations": {
+        "part": [0],
     },
 };
 var enemyHardenedSheet;
@@ -204,6 +217,7 @@ function preload() {
     bulletSheet = new createjs.SpriteSheet(bulletData);
     uiSheet = new createjs.SpriteSheet(uiData);
     controlPointSheet = new createjs.SpriteSheet(controlPointData);
+    particleSheet = new createjs.SpriteSheet(particleData);
 }
 function init() {
     canvas = document.getElementById("canvas"); // reference to canvas element

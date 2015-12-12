@@ -15,6 +15,8 @@
         private enemies: gameobject.Enemy[] = [];
         private bullets: gameobject.Bullet[] = [];
         
+        private particles: gameobject.Particle[] = [];
+        
         private cLives: objects.Label;
         private pLives: objects.Label;
         private score: objects.Label;
@@ -37,6 +39,12 @@
                 this.controlPoints[i].x = Math.floor(Math.random() * 650 + 100);
                 this.controlPoints[i].y = Math.floor(Math.random() * 450 + 100);
                 this.addChild(this.controlPoints[i]);
+            }
+            
+            for (var i = 0; i < 24; i++)
+            {
+                this.particles[i] = new gameobject.Particle();
+                this.addChild(this.particles[i]);
             }
              
             for (var i = 0; i < 4; i++)
@@ -96,6 +104,22 @@
             stage.addChild(this);
         }
 
+        public spawnParticles(x:number, y:number)
+        {
+            var count = 0;
+            for (var q = 0; q < this.particles.length; q++)
+            {
+                if (this.particles[q].alive == false)
+                {
+                    this.particles[q].spawnDirection(x, y);
+                    count++;
+                    
+                    if (count > 4)
+                        return;
+                }
+            }
+        }
+
         public update(): void {
             this.player.update(this.bullets);
             
@@ -103,7 +127,10 @@
             this.checkCollisionEnemyPlayer();
             this.checkCollisionEnemyControlPoint();
             
-            
+            for (var p = 0; p < this.particles.length; p++)
+            {
+                this.particles[p].update();
+            }
             for (var x = 0; x < this.bullets.length; x++)
             {
                 this.bullets[x].update();
@@ -253,6 +280,7 @@
                         this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
+                        this.spawnParticles(this.enemies[ene].x, this.enemies[ene].y);
                         if (this.enemies[ene].typeID == 0)
                         {
                             this.player.addScore(1000);
@@ -280,11 +308,16 @@
                         
                         if (len < 8 + 50)
                         {
+                            var oldX, oldY;
+                            oldX = this.enemies[ene].x;
+                            oldY = this.enemies[ene].y;
                             this.bullets[bul].KillBullet();
                             this.enemies[ene].Hit();
+                            
                             if (!this.enemies[ene].getAlive())
                             {
                                 this.player.addScore(2500);
+                                this.spawnParticles(oldX, oldY);
                             }
                         }
                     }
@@ -296,10 +329,14 @@
                         
                         if (len < 8 + 25)
                         {
+                            var oldX, oldY;
+                            oldX = this.enemies[ene].x;
+                            oldY = this.enemies[ene].y;
                             this.bullets[bul].KillBullet();
                             this.enemies[ene].Hit();
                             if (!this.enemies[ene].getAlive())
                             {
+                                this.spawnParticles(oldX, oldY);
                                 if (this.enemies[ene].typeID == 0)
                                 {
                                     this.player.addScore(1000);
