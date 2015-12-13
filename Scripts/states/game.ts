@@ -20,6 +20,9 @@
         private cLives: objects.Label;
         private pLives: objects.Label;
         private score: objects.Label;
+        
+        private stageTimeout = 90;
+        private stageTimer = 0;
 
         // CONSTRUCTOR
         constructor() {
@@ -172,20 +175,26 @@
             
             if (this.allEnemiesDestroyed())
             {
-                //add level reset here
-                CURRENT_LEVEL++;
-                if (CURRENT_LEVEL % 3 == 0)
+                this.stageTimer++;
+                if (this.stageTimer > this.stageTimeout)
                 {
-                    CONTROL_POINT_COUNT++;
-                    NORMAL_ENEMY_COUNT = 3;
-                    SPECIAL_ENEMY_COUNT = 2;
+                        //add level reset here
+                    CURRENT_LEVEL++;
+                    if (CURRENT_LEVEL % 3 == 0)
+                    {
+                        CONTROL_POINT_COUNT++;
+                        NORMAL_ENEMY_COUNT = 3;
+                        SPECIAL_ENEMY_COUNT = 2;
+                        this.stage.removeAllChildren();
+                        this.start();
+                    }
+                    NORMAL_ENEMY_COUNT++;
+                    SPECIAL_ENEMY_COUNT++;
                     this.stage.removeAllChildren();
+                    this.stageTimer = 0;
                     this.start();
+                    
                 }
-                NORMAL_ENEMY_COUNT++;
-                SPECIAL_ENEMY_COUNT++;
-                this.stage.removeAllChildren();
-                this.start();
             }
         }
         

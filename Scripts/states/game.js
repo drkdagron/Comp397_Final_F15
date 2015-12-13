@@ -22,6 +22,8 @@ var states;
             this.enemies = [];
             this.bullets = [];
             this.particles = [];
+            this.stageTimeout = 90;
+            this.stageTimer = 0;
         }
         // PUBLIC METHODS
         Game.prototype.start = function () {
@@ -134,19 +136,23 @@ var states;
                 this.score.text = "Score: " + this.player.getScore();
             }
             if (this.allEnemiesDestroyed()) {
-                //add level reset here
-                CURRENT_LEVEL++;
-                if (CURRENT_LEVEL % 3 == 0) {
-                    CONTROL_POINT_COUNT++;
-                    NORMAL_ENEMY_COUNT = 3;
-                    SPECIAL_ENEMY_COUNT = 2;
+                this.stageTimer++;
+                if (this.stageTimer > this.stageTimeout) {
+                    //add level reset here
+                    CURRENT_LEVEL++;
+                    if (CURRENT_LEVEL % 3 == 0) {
+                        CONTROL_POINT_COUNT++;
+                        NORMAL_ENEMY_COUNT = 3;
+                        SPECIAL_ENEMY_COUNT = 2;
+                        this.stage.removeAllChildren();
+                        this.start();
+                    }
+                    NORMAL_ENEMY_COUNT++;
+                    SPECIAL_ENEMY_COUNT++;
                     this.stage.removeAllChildren();
+                    this.stageTimer = 0;
                     this.start();
                 }
-                NORMAL_ENEMY_COUNT++;
-                SPECIAL_ENEMY_COUNT++;
-                this.stage.removeAllChildren();
-                this.start();
             }
         };
         Game.prototype.findClosestControlPoint = function (x, y) {
@@ -211,14 +217,18 @@ var states;
                     var edgeY = this.player.y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     if (len < 25 + 25) {
+                        var oldX, oldY;
+                        oldX = this.enemies[ene].x;
+                        oldY = this.enemies[ene].y;
                         this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
-                        this.spawnParticles(this.enemies[ene].x, this.enemies[ene].y);
                         if (this.enemies[ene].typeID == 0) {
+                            this.spawnParticles(oldX, oldY);
                             this.player.addScore(1000);
                         }
                         else {
+                            this.spawnParticles(oldX, oldY);
                             this.player.addScore(1500);
                         }
                     }
