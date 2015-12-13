@@ -11,7 +11,7 @@ var gameobject;
             _super.call(this, sheet, frame);
             this.xDir = 0;
             this.yDir = 0;
-            this.moveSpeed = 4;
+            this.moveSpeed = 3;
             this.yBuffer = 20;
             this.alive = false;
             this.lives = 0;
@@ -28,12 +28,11 @@ var gameobject;
             switch (this.typeID) {
                 case 1:
                     //fast moving enemy
-                    this.moveSpeed = 8;
+                    this.moveSpeed = 6;
                     this.lives = 1;
                     break;
                 case 2:
                     //split
-                    this.moveSpeed = 6;
                     this.lives = 2;
                     break;
                 case 3:
@@ -48,7 +47,6 @@ var gameobject;
                 case 5:
                     //split piece
                     this.lives = 1;
-                    this.moveSpeed = 6;
                     break;
             }
         }

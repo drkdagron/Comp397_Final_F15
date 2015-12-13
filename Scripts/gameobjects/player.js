@@ -112,7 +112,7 @@ var gameobject;
         Player.prototype.getLives = function () {
             return this.lives;
         };
-        Player.prototype.Bang = function (coin) {
+        Player.prototype.Bang = function (bullet) {
             var radian = this.rotation * (Math.PI / 180);
             var eX = Math.cos(radian + Math.PI / 2);
             var eY = Math.sin(radian + Math.PI / 2);
@@ -121,14 +121,14 @@ var gameobject;
             var norm = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
             edgeX /= -norm;
             edgeY /= -norm;
-            for (var i = 0; i < coin.length; i++) {
-                if (coin[i].alive == false && coin[i].fired == false) {
-                    coin[i].timer = 0;
-                    coin[i].direction(edgeX, edgeY);
-                    coin[i].alive = true;
-                    coin[i].fired = true;
-                    coin[i].x = this.x;
-                    coin[i].y = this.y;
+            for (var i = 0; i < bullet.length; i++) {
+                if (bullet[i].alive == false && bullet[i].fired == false) {
+                    bullet[i].timer = 0;
+                    bullet[i].direction(edgeX, edgeY);
+                    bullet[i].alive = true;
+                    bullet[i].fired = true;
+                    bullet[i].x = this.x;
+                    bullet[i].y = this.y;
                     this.fireTimer = 0;
                     createjs.Sound.play("bullet");
                     return;

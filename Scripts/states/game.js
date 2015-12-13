@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var states;
 (function (states) {
@@ -32,15 +31,15 @@ var states;
             this.addChild(this.world);
             for (var i = 0; i < CONTROL_POINT_COUNT; i++) {
                 this.controlPoints[i] = new gameobject.ControlPoint(controlPointSheet, "controlPoint");
-                this.controlPoints[i].x = Math.floor(Math.random() * 650 + 100);
-                this.controlPoints[i].y = Math.floor(Math.random() * 450 + 100);
+                this.controlPoints[i].x = Math.floor(Math.random() * 300 + 300);
+                this.controlPoints[i].y = Math.floor(Math.random() * 200 + 200);
                 this.addChild(this.controlPoints[i]);
             }
             for (var i = 0; i < 24; i++) {
                 this.particles[i] = new gameobject.Particle();
                 this.addChild(this.particles[i]);
             }
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 5; i++) {
                 this.bullets[i] = new gameobject.Bullet();
                 this.addChild(this.bullets[i]);
             }
@@ -49,13 +48,37 @@ var states;
             CURRENT_LEVEL = 0;
             this.splitStart = NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT;
             for (var i = 0; i < NORMAL_ENEMY_COUNT; i++) {
+                this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[i] = new gameobject.Enemy(enemyNormalSheet, "normal1", 0);
                 this.enemies[i].gotoAndPlay("animation");
-                this.enemies[i].x = Math.floor(Math.random() * 800);
-                this.enemies[i].y = Math.floor(Math.random() * 600);
-                this.enemies[i].xDir = Math.random() * 3 - 1;
-                this.enemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.enemies[i]);
+                if (this.spawnSide == 1) {
+                    this.enemies[i].x = Math.floor(Math.random() * 100 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else if (this.spawnSide == 2) {
+                    this.enemies[i].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 50 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else if (this.spawnSide == 3) {
+                    this.enemies[i].x = Math.floor(Math.random() * 100 + 650);
+                    this.enemies[i].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else {
+                    this.enemies[i].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 50 + 550);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
             }
             for (var x = NORMAL_ENEMY_COUNT; x < NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT; x++) {
                 var rnd = Math.floor(Math.random() * 3);
@@ -69,17 +92,41 @@ var states;
                     case 2:
                         this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
                 }
+                this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[x].gotoAndPlay("animation");
                 this.enemies[x].x = Math.floor(Math.random() * 800);
                 this.enemies[x].y = Math.floor(Math.random() * 600);
-                var dirX = Math.random() * 2 - 1;
-                var dirY = Math.random() * 2 - 1;
-                this.enemies[x].xDir = dirX;
-                this.enemies[x].yDir = dirY;
-                this.addChild(this.enemies[x]);
+                if (this.spawnSide == 1) {
+                    this.enemies[x].x = Math.floor(Math.random() * 100 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else if (this.spawnSide == 2) {
+                    this.enemies[x].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 50 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else if (this.spawnSide == 3) {
+                    this.enemies[x].x = Math.floor(Math.random() * 100 + 650);
+                    this.enemies[x].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else {
+                    this.enemies[x].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 50 + 550);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
             }
             this.player = new gameobject.Player(playerSheet, "ship");
-            this.player.setPosition(75, 240);
+            this.player.setPosition(400, 300);
             this.addChild(this.player);
             this.cLives = new objects.Label("Computer Lives: " + this.compLives, "24px Consolas", "#FFF", 135, 20);
             this.addChild(this.cLives);
@@ -95,27 +142,51 @@ var states;
             this.addChild(this.world);
             for (var i = 0; i < CONTROL_POINT_COUNT; i++) {
                 this.controlPoints[i] = new gameobject.ControlPoint(controlPointSheet, "controlPoint");
-                this.controlPoints[i].x = Math.floor(Math.random() * 650 + 100);
-                this.controlPoints[i].y = Math.floor(Math.random() * 450 + 100);
+                this.controlPoints[i].x = Math.floor(Math.random() * 300 + 300);
+                this.controlPoints[i].y = Math.floor(Math.random() * 200 + 200);
                 this.addChild(this.controlPoints[i]);
             }
             for (var i = 0; i < 24; i++) {
                 this.particles[i] = new gameobject.Particle();
                 this.addChild(this.particles[i]);
             }
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 5; i++) {
                 this.bullets[i] = new gameobject.Bullet();
                 this.addChild(this.bullets[i]);
             }
             this.splitStart = NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT;
             for (var i = 0; i < NORMAL_ENEMY_COUNT; i++) {
+                this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[i] = new gameobject.Enemy(enemyNormalSheet, "normal1", 0);
                 this.enemies[i].gotoAndPlay("animation");
-                this.enemies[i].x = Math.floor(Math.random() * 800);
-                this.enemies[i].y = Math.floor(Math.random() * 600);
-                this.enemies[i].xDir = Math.random() * 3 - 1;
-                this.enemies[i].yDir = Math.random() * 3 - 1;
-                this.addChild(this.enemies[i]);
+                if (this.spawnSide == 1) {
+                    this.enemies[i].x = Math.floor(Math.random() * 100 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else if (this.spawnSide == 2) {
+                    this.enemies[i].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 50 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else if (this.spawnSide == 3) {
+                    this.enemies[i].x = Math.floor(Math.random() * 100 + 650);
+                    this.enemies[i].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
+                else {
+                    this.enemies[i].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[i].y = Math.floor(Math.random() * 50 + 550);
+                    this.enemies[i].xDir = Math.random() * 2 - 1;
+                    this.enemies[i].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[i]);
+                }
             }
             for (var x = NORMAL_ENEMY_COUNT; x < NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT; x++) {
                 var rnd = Math.floor(Math.random() * 3);
@@ -129,17 +200,39 @@ var states;
                     case 2:
                         this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
                 }
+                this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[x].gotoAndPlay("animation");
-                this.enemies[x].x = Math.floor(Math.random() * 800);
-                this.enemies[x].y = Math.floor(Math.random() * 600);
-                var dirX = Math.random() * 2 - 1;
-                var dirY = Math.random() * 2 - 1;
-                this.enemies[x].xDir = dirX;
-                this.enemies[x].yDir = dirY;
-                this.addChild(this.enemies[x]);
+                if (this.spawnSide == 1) {
+                    this.enemies[x].x = Math.floor(Math.random() * 100 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else if (this.spawnSide == 2) {
+                    this.enemies[x].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 50 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else if (this.spawnSide == 3) {
+                    this.enemies[x].x = Math.floor(Math.random() * 100 + 650);
+                    this.enemies[x].y = Math.floor(Math.random() * 500 + 50);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
+                else {
+                    this.enemies[x].x = Math.floor(Math.random() * 700 + 50);
+                    this.enemies[x].y = Math.floor(Math.random() * 50 + 550);
+                    this.enemies[x].xDir = Math.random() * 2 - 1;
+                    this.enemies[x].yDir = Math.random() * 2 - 1;
+                    this.addChild(this.enemies[x]);
+                }
             }
             this.player = new gameobject.Player(playerSheet, "ship");
-            this.player.setPosition(75, 240);
+            this.player.setPosition(400, 300);
             this.addChild(this.player);
             this.cLives = new objects.Label("Computer Lives: " + this.compLives, "24px Consolas", "#FFF", 135, 20);
             this.addChild(this.cLives);
@@ -161,48 +254,48 @@ var states;
             }
         };
         Game.prototype.update = function () {
-            this.player.update(this.bullets);
-            this.checkCollisionBulletEnemy();
-            this.checkCollisionEnemyPlayer();
-            this.checkCollisionEnemyControlPoint();
-            for (var p = 0; p < this.particles.length; p++) {
-                this.particles[p].update();
-            }
-            for (var x = 0; x < this.bullets.length; x++) {
-                this.bullets[x].update();
-            }
-            for (var y = 0; y < this.enemies.length; y++) {
-                this.enemies[y].update();
-                if (this.enemies[y].diving) {
-                    var ctlP = this.findClosestControlPoint(this.enemies[y].x, this.enemies[y].y);
-                    var edgeX = this.enemies[y].x - this.controlPoints[ctlP].x;
-                    var edgeY = this.enemies[y].y - this.controlPoints[ctlP].y;
-                    var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
-                    edgeX /= len;
-                    edgeY /= len;
-                    this.enemies[y].xDir = -edgeX;
-                    this.enemies[y].yDir = -edgeY;
+            this.stageTimer++;
+            if (this.stageTimer > this.stageTimeout) {
+                this.player.update(this.bullets);
+                this.checkCollisionBulletEnemy();
+                this.checkCollisionEnemyPlayer();
+                this.checkCollisionEnemyControlPoint();
+                for (var p = 0; p < this.particles.length; p++) {
+                    this.particles[p].update();
                 }
-            }
-            for (var z = 0; z < this.controlPoints.length; z++) {
-                this.controlPoints[z].update();
-            }
-            if (this.compLives <= 0 || this.shipLives <= 0) {
-                CURRENT_LEVEL = 0;
-                CONTROL_POINT_COUNT = 1;
-                NORMAL_ENEMY_COUNT = 3;
-                SPECIAL_ENEMY_COUNT = 2;
-                this.stage.removeAllChildren();
-                changeState(config.OVER_STATE);
-            }
-            else {
-                this.cLives.text = "Computer Lives: " + this.compLives;
-                this.pLives.text = "Ship Lives: " + this.shipLives;
-                this.score.text = "Score: " + pScore.toString();
-            }
-            if (this.allEnemiesDestroyed()) {
-                this.stageTimer++;
-                if (this.stageTimer > this.stageTimeout) {
+                for (var x = 0; x < this.bullets.length; x++) {
+                    this.bullets[x].update();
+                }
+                for (var y = 0; y < this.enemies.length; y++) {
+                    this.enemies[y].update();
+                    if (this.enemies[y].diving) {
+                        var ctlP = this.findClosestControlPoint(this.enemies[y].x, this.enemies[y].y);
+                        var edgeX = this.enemies[y].x - this.controlPoints[ctlP].x;
+                        var edgeY = this.enemies[y].y - this.controlPoints[ctlP].y;
+                        var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
+                        edgeX /= len;
+                        edgeY /= len;
+                        this.enemies[y].xDir = -edgeX;
+                        this.enemies[y].yDir = -edgeY;
+                    }
+                }
+                for (var z = 0; z < this.controlPoints.length; z++) {
+                    this.controlPoints[z].update();
+                }
+                if (this.compLives <= 0 || this.shipLives <= 0) {
+                    CURRENT_LEVEL = 0;
+                    CONTROL_POINT_COUNT = 1;
+                    NORMAL_ENEMY_COUNT = 3;
+                    SPECIAL_ENEMY_COUNT = 2;
+                    this.stage.removeAllChildren();
+                    changeState(config.OVER_STATE);
+                }
+                else {
+                    this.cLives.text = "Computer Lives: " + this.compLives;
+                    this.pLives.text = "Ship Lives: " + this.shipLives;
+                    this.score.text = "Score: " + pScore.toString();
+                }
+                if (this.allEnemiesDestroyed()) {
                     //add level reset here
                     createjs.Sound.play("next_level");
                     CURRENT_LEVEL++;
@@ -348,8 +441,8 @@ var states;
                                             this.enemies[n].gotoAndPlay("animation");
                                             this.enemies[n].x = oldX;
                                             this.enemies[n].y = oldY;
-                                            this.enemies[n].xDir = Math.random() * 3 - 1;
-                                            this.enemies[n].yDir = Math.random() * 3 - 1;
+                                            this.enemies[n].xDir = Math.random() * 2 - 1;
+                                            this.enemies[n].yDir = Math.random() * 2 - 1;
                                             console.log("Spawning smaller guy: " + this.enemies[n].x + ", " + this.enemies[n].y);
                                             this.enemies[n].lives = 2;
                                             this.addChild(this.enemies[n]);

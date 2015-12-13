@@ -141,7 +141,7 @@ module gameobject
 			return this.lives;
 		}
 		
-		private Bang(coin:gameobject.Bullet[]):void {
+		private Bang(bullet:gameobject.Bullet[]):void {
 
 			var radian = this.rotation * (Math.PI/180);
 			var eX = Math.cos(radian + Math.PI/2);
@@ -154,17 +154,17 @@ module gameobject
 			edgeX /= -norm;
 			edgeY /= -norm;
 			
-			for (var i = 0; i < coin.length; i++)
+			for (var i = 0; i < bullet.length; i++)
 			{
-				if (coin[i].alive == false && coin[i].fired == false)
+				if (bullet[i].alive == false && bullet[i].fired == false)
 				{
-					coin[i].timer = 0;
-					coin[i].direction(edgeX, edgeY);
-					coin[i].alive = true;
-					coin[i].fired = true;
-					coin[i].x = this.x;
-					coin[i].y = this.y;
-					this.fireTimer =0 ;
+					bullet[i].timer = 0;
+					bullet[i].direction(edgeX, edgeY);
+					bullet[i].alive = true;
+					bullet[i].fired = true;
+					bullet[i].x = this.x;
+					bullet[i].y = this.y;
+					this.fireTimer = 0 ;
 					createjs.Sound.play("bullet");
 					return;
 				}
