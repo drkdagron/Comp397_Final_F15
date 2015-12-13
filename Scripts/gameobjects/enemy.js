@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var gameobject;
 (function (gameobject) {
@@ -20,7 +19,7 @@ var gameobject;
             this.diveTimer = 0;
             this.diving = false;
             this.type = "normal";
-            this.typeID = 0; //0 - normal, 1 - fast, 2 - heavy, 3 - split, 4 - boss
+            this.typeID = 0; //0 - normal, 1 - fast, 2 - split, 3 - heavy, 4 - boss
             this.regX = 50;
             this.regY = 50;
             this.lives = 3;

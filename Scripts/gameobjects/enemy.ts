@@ -15,7 +15,7 @@ module gameobject{
 		public diving: boolean = false;
 		
 		private type:string = "normal";
-		public typeID:number = 0; //0 - normal, 1 - fast, 2 - heavy, 3 - split, 4 - boss
+		public typeID:number = 0; //0 - normal, 1 - fast, 2 - split, 3 - heavy, 4 - boss
 		
 		constructor(sheet:createjs.SpriteSheet, frame:string, type:number)
 		{
@@ -31,7 +31,7 @@ module gameobject{
 			switch (this.typeID)
 			{
 				case 1:
-				//fast moving enemy
+					//fast moving enemy
 					this.moveSpeed = 8;
 					this.lives = 1;
 					break;
@@ -39,7 +39,7 @@ module gameobject{
 					//split
 					break;
 				case 3:
-				//hardened/heavy enemy
+					//hardened/heavy enemy
 					this.moveSpeed = 2;
 					this.lives = 5;
 					break;

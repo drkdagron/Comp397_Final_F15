@@ -97,7 +97,7 @@
             this.pLives = new objects.Label("Ship Lives: " + this.shipLives, "24px Consolas", "#FFF", 435, 20)
             this.addChild(this.pLives);
             
-            this.score = new objects.Label("Score: " + this.player.getScore(), "24px Consolas", "#FFF", 675, 20);
+            this.score = new objects.Label("Score: " + pScore.toString(), "24px Consolas", "#FFF", 675, 20);
             this.addChild(this.score);
             
             
@@ -157,22 +157,24 @@
             
             if (this.compLives <= 0 || this.shipLives <= 0)
             {
-                this.cLives.text = "GAME OVER";
-                this.pLives.text = "GAME OVER";
-                this.score.text = "GAME OVER"; 
-                pScore = this.player.getScore();
+                CURRENT_LEVEL = 0;
+                CONTROL_POINT_COUNT = 1;
+                NORMAL_ENEMY_COUNT = 3;
+                SPECIAL_ENEMY_COUNT = 2;
+                this.stage.removeAllChildren();
                 changeState(config.OVER_STATE);
             }
             else
             {
                 this.cLives.text = "Computer Lives: " + this.compLives;
                 this.pLives.text = "Ship Lives: " + this.shipLives;
-                this.score.text = "Score: " + this.player.getScore();
+                this.score.text = "Score: " + pScore.toString();
             }
             
             if (this.allEnemiesDestroyed())
             {
                 //add level reset here
+                createjs.Sound.play("next_level");
                 CURRENT_LEVEL++;
                 if (CURRENT_LEVEL % 3 == 0)
                 {
@@ -247,7 +249,8 @@
                         {
                             this.compLives--;
                             this.controlPoints[cp].Hit();
-                            this.enemies[ene].Kill();                    
+                            this.enemies[ene].Kill();  
+                            createjs.Sound.play("hit");                  
                         }
                     }
                 }
@@ -287,12 +290,14 @@
                         if (this.enemies[ene].typeID == 0)
                         {
                             this.spawnParticles(oldX, oldY);
-                            this.player.addScore(1000);
+                            pScore += 1000;
+                            createjs.Sound.play("enemy_death");
                         }
                         else
                         {
                             this.spawnParticles(oldX,oldY);
-                            this.player.addScore(1500);
+                            pScore += 1500;
+                            createjs.Sound.play("enemy_death");
                         }
                     }
                 }
@@ -321,8 +326,9 @@
                             
                             if (!this.enemies[ene].getAlive())
                             {
-                                this.player.addScore(2500);
+                                pScore += 2500;
                                 this.spawnParticles(oldX, oldY);
+                                createjs.Sound.play("enemy_death");
                             }
                         }
                     }
@@ -344,11 +350,13 @@
                                 this.spawnParticles(oldX, oldY);
                                 if (this.enemies[ene].typeID == 0)
                                 {
-                                    this.player.addScore(1000);
+                                    pScore += 1000;
+                                    createjs.Sound.play("enemy_death");
                                 }
                                 else
                                 {
-                                    this.player.addScore(1500);
+                                    pScore += 1500;
+                                    createjs.Sound.play("enemy_death");
                                 }
                             }
                         }

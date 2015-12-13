@@ -19,22 +19,23 @@
         // PUBLIC METHODS
         public start(): void {
             createjs.Sound.stop();
+            createjs.Sound.play("game_over");
             console.log("over state started");
             
             this.background = new gameobject.World(worldSheet, "world");
             this.addChild(this.background);
             
-            this.gameover = new objects.Label("GAME OVER!!!", "40px Consolas", "#EEE", 400, 125);
+            this.gameover = new objects.Label("GAME OVER!!!", "40px Consolas", "#EEE", 400, 150);
             this.addChild(this.gameover);
             
-            this.score = new objects.Label("Your Score: " + pScore.toString(), "24px Consolas", "#EEE", 400, 180);
+            this.score = new objects.Label("Your Score: " + pScore.toString(), "24px Consolas", "#EEE", 400, 200);
             this.addChild(this.score);
             
-            this.againButton = new gameobject.UiButton(uiSheet, "restart", 400, 300);
+            this.againButton = new gameobject.UiButton(uiSheet, "restart", 400, 325);
             this.againButton.on("click", this.playAgain, this);
             this.addChild(this.againButton);
             
-            this.backButton = new gameobject.UiButton(uiSheet, "menu", 400, 380);
+            this.backButton = new gameobject.UiButton(uiSheet, "menu", 400, 400);
             this.backButton.on("click", this.backMenu, this);
             this.addChild(this.backButton);
             
@@ -42,10 +43,12 @@
         }
 
         private playAgain(): void {
-            changeState(config.PLAY_STATE);
+            pScore = 0;
+            changeState(config.PLAY_STATE);            
         }
         
         private backMenu(): void {
+            pScore = 0;
             changeState(config.MENU_STATE);
         }
 

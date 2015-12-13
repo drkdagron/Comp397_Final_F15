@@ -32,7 +32,7 @@ var stage: createjs.Stage;
 var stats: Stats;
 var state: number;
 var currentState: objects.Scene; // alias for our current state
-var pScore: number;
+
 
 // GAME OBJECTS
 var menu: states.Menu;
@@ -40,7 +40,7 @@ var game: states.Game;
 var over: states.Over;
 var instruc: states.Instruction;
 
-var score:number;
+var pScore: number = 0;
 var NORMAL_ENEMY_COUNT: number = 3;
 var SPECIAL_ENEMY_COUNT: number = 2;
 var CONTROL_POINT_COUNT: number = 1;
@@ -50,10 +50,11 @@ var background:createjs.Sound;
 
 // manifest of all our assets
 var manifest = [
-    { id: "click", src: "../../Assets/audio/click1.ogg" },
-    { id: "bg", src: "../../Assets/audio/pkmn_route1.mp3" },
-    { id: "hit", src: "../../Assets/audio/thunder.ogg" },
-    { id: "pickup", src: "../../Assets/audio/pickup4.ogg"},
+    { id: "game_over", src: "../../Assets/audio/game_over.ogg" },
+    { id: "next_level", src: "../../Assets/audio/next_level.mp3"},
+    { id: "bg_music", src: "../../Assets/audio/bg_music.mp3" },
+    { id: "hit", src: "../../Assets/audio/ctrl_hit.mp3" },
+    { id: "enemy_death", src: "../../Assets/audio/enemy_death.mp3"},
     { id: "bullet", src: "../../Assets/audio/bullet.mp3"}
 ];
 

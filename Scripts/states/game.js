@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var states;
 (function (states) {
@@ -79,7 +78,7 @@ var states;
             this.addChild(this.cLives);
             this.pLives = new objects.Label("Ship Lives: " + this.shipLives, "24px Consolas", "#FFF", 435, 20);
             this.addChild(this.pLives);
-            this.score = new objects.Label("Score: " + this.player.getScore(), "24px Consolas", "#FFF", 675, 20);
+            this.score = new objects.Label("Score: " + pScore.toString(), "24px Consolas", "#FFF", 675, 20);
             this.addChild(this.score);
             stage.addChild(this);
         };
@@ -122,19 +121,21 @@ var states;
                 this.controlPoints[z].update();
             }
             if (this.compLives <= 0 || this.shipLives <= 0) {
-                this.cLives.text = "GAME OVER";
-                this.pLives.text = "GAME OVER";
-                this.score.text = "GAME OVER";
-                pScore = this.player.getScore();
+                CURRENT_LEVEL = 0;
+                CONTROL_POINT_COUNT = 1;
+                NORMAL_ENEMY_COUNT = 3;
+                SPECIAL_ENEMY_COUNT = 2;
+                this.stage.removeAllChildren();
                 changeState(config.OVER_STATE);
             }
             else {
                 this.cLives.text = "Computer Lives: " + this.compLives;
                 this.pLives.text = "Ship Lives: " + this.shipLives;
-                this.score.text = "Score: " + this.player.getScore();
+                this.score.text = "Score: " + pScore.toString();
             }
             if (this.allEnemiesDestroyed()) {
                 //add level reset here
+                createjs.Sound.play("next_level");
                 CURRENT_LEVEL++;
                 if (CURRENT_LEVEL % 3 == 0) {
                     CONTROL_POINT_COUNT++;
@@ -191,6 +192,7 @@ var states;
                             this.compLives--;
                             this.controlPoints[cp].Hit();
                             this.enemies[ene].Kill();
+                            createjs.Sound.play("hit");
                         }
                     }
                 }
@@ -211,15 +213,21 @@ var states;
                     var edgeY = this.player.y - this.enemies[ene].y + 25;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     if (len < 25 + 25) {
+                        var oldX, oldY;
+                        oldX = this.enemies[ene].x;
+                        oldY = this.enemies[ene].y;
                         this.shipLives--;
                         this.enemies[ene].Kill();
                         this.player.Hit();
-                        this.spawnParticles(this.enemies[ene].x, this.enemies[ene].y);
                         if (this.enemies[ene].typeID == 0) {
-                            this.player.addScore(1000);
+                            this.spawnParticles(oldX, oldY);
+                            pScore += 1000;
+                            createjs.Sound.play("enemy_death");
                         }
                         else {
-                            this.player.addScore(1500);
+                            this.spawnParticles(oldX, oldY);
+                            pScore += 1500;
+                            createjs.Sound.play("enemy_death");
                         }
                     }
                 }
@@ -239,8 +247,9 @@ var states;
                             this.bullets[bul].KillBullet();
                             this.enemies[ene].Hit();
                             if (!this.enemies[ene].getAlive()) {
-                                this.player.addScore(2500);
+                                pScore += 2500;
                                 this.spawnParticles(oldX, oldY);
+                                createjs.Sound.play("enemy_death");
                             }
                         }
                     }
@@ -257,10 +266,12 @@ var states;
                             if (!this.enemies[ene].getAlive()) {
                                 this.spawnParticles(oldX, oldY);
                                 if (this.enemies[ene].typeID == 0) {
-                                    this.player.addScore(1000);
+                                    pScore += 1000;
+                                    createjs.Sound.play("enemy_death");
                                 }
                                 else {
-                                    this.player.addScore(1500);
+                                    pScore += 1500;
+                                    createjs.Sound.play("enemy_death");
                                 }
                             }
                         }
