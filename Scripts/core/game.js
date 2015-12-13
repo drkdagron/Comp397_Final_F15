@@ -27,13 +27,12 @@ var stage;
 var stats;
 var state;
 var currentState; // alias for our current state
-var pScore;
 // GAME OBJECTS
 var menu;
 var game;
 var over;
 var instruc;
-var score;
+var pScore = 0;
 var NORMAL_ENEMY_COUNT = 3;
 var SPECIAL_ENEMY_COUNT = 2;
 var CONTROL_POINT_COUNT = 1;
@@ -41,10 +40,11 @@ var CURRENT_LEVEL = 0;
 var background;
 // manifest of all our assets
 var manifest = [
-    { id: "click", src: "../../Assets/audio/click1.ogg" },
-    { id: "bg", src: "../../Assets/audio/pkmn_route1.mp3" },
-    { id: "hit", src: "../../Assets/audio/thunder.ogg" },
-    { id: "pickup", src: "../../Assets/audio/pickup4.ogg" },
+    { id: "game_over", src: "../../Assets/audio/game_over.ogg" },
+    { id: "next_level", src: "../../Assets/audio/next_level.mp3" },
+    { id: "bg_music", src: "../../Assets/audio/bg_music.mp3" },
+    { id: "hit", src: "../../Assets/audio/ctrl_hit.mp3" },
+    { id: "enemy_death", src: "../../Assets/audio/enemy_death.mp3" },
     { id: "bullet", src: "../../Assets/audio/bullet.mp3" }
 ];
 var playerSheet;
