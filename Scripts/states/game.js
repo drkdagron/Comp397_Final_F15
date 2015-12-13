@@ -44,6 +44,7 @@ var states;
                 this.bullets[i] = new gameobject.Bullet();
                 this.addChild(this.bullets[i]);
             }
+            this.splitStart = NORMAL_ENEMY_COUNT + SPECIAL_ENEMY_COUNT;
             for (var i = 0; i < NORMAL_ENEMY_COUNT; i++) {
                 this.enemies[i] = new gameobject.Enemy(enemyNormalSheet, "normal1", 0);
                 this.enemies[i].gotoAndPlay("animation");
@@ -270,6 +271,21 @@ var states;
                                     this.player.addScore(1000);
                                 }
                                 else {
+                                    if (this.enemies[ene].typeID == 2) {
+                                        for (var spl = 0; spl < 2; spl++) {
+                                            var n = this.splitStart + spl;
+                                            this.enemies[n] = new gameobject.Enemy(enemySplitSheet, "split1", 5);
+                                            this.enemies[n].gotoAndPlay("animation");
+                                            this.enemies[n].x = oldX;
+                                            this.enemies[n].y = oldY;
+                                            this.enemies[n].xDir = Math.random() * 3 - 1;
+                                            this.enemies[n].yDir = Math.random() * 3 - 1;
+                                            console.log("Spawning smaller guy: " + this.enemies[n].x + ", " + this.enemies[n].y);
+                                            this.enemies[n].lives = 2;
+                                            this.addChild(this.enemies[n]);
+                                        }
+                                        this.splitStart += 2;
+                                    }
                                     this.player.addScore(1500);
                                 }
                             }

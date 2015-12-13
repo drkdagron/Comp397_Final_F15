@@ -17,7 +17,7 @@ var gameobject;
             this.coins = [];
             this.firing = false;
             this.fireTimer = 0;
-            this.fireRate = 15;
+            this.fireRate = 5;
             this.setBounds(0, 0, 50, 38);
             this.regX = 50 / 2;
             this.regY = 38 / 2;

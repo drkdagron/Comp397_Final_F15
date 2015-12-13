@@ -10,7 +10,7 @@ module gameobject
 		
 		private firing: boolean = false;
 		private fireTimer: number = 0;
-		private fireRate: number = 15;
+		private fireRate: number = 5;
 		
 		constructor(sheet:createjs.SpriteSheet, frame:string)
 		{

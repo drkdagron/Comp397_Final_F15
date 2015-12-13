@@ -8,7 +8,7 @@ module gameobject{
 		private yBuffer:number = 20;
 		
 		private alive:boolean = false;
-		private lives: number = 0;
+		public lives: number = 0;
 		
 		private diveBombTimer:number = 1500;
 		private diveTimer: number = 0;
@@ -37,6 +37,8 @@ module gameobject{
 					break;
 				case 2:
 					//split
+					this.moveSpeed = 6;
+					this.lives = 2;
 					break;
 				case 3:
 				//hardened/heavy enemy
@@ -46,6 +48,12 @@ module gameobject{
 				case 4:
 					//boss
 					this.lives = 10;
+					break;
+				case 5:
+					//split piece
+					this.lives = 1;
+					this.moveSpeed = 6;	
+					break;
 			}
 		}
 		
@@ -83,6 +91,9 @@ module gameobject{
 		
 		public update()
 		{
+			if (this.typeID == 5)
+				console.log("Testing Life: " + this.lives);
+			
 			if (this.alive)
 			{
 				this.diveTimer++;

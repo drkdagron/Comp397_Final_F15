@@ -34,10 +34,10 @@ module gameobject {
 			
 			var radian = angle * (Math.PI/180);
 			
-			console.log(this.rotation);
+			//console.log(this.rotation);
 			var eX = Math.cos(radian + Math.PI/2);
 			var eY = Math.sin(radian + Math.PI/2);
-			console.log(eX + "\t" + eY);
+			//console.log(eX + "\t" + eY);
 		
 			var len = Math.sqrt(eX * eX + eY * eY);
 			eX /= len;
@@ -48,7 +48,7 @@ module gameobject {
 			
 			this.alive = true;
 			
-			console.log("spawning particle @ " + this.x + ", " + this.y + " moving in direction: " + eX + ", " + eY);
+			//console.log("spawning particle @ " + this.x + ", " + this.y + " moving in direction: " + eX + ", " + eY);
 		}
 		
 		public direction(x:number, y:number): void {

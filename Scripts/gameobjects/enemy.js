@@ -34,6 +34,8 @@ var gameobject;
                     break;
                 case 2:
                     //split
+                    this.moveSpeed = 6;
+                    this.lives = 2;
                     break;
                 case 3:
                     //hardened/heavy enemy
@@ -43,6 +45,12 @@ var gameobject;
                 case 4:
                     //boss
                     this.lives = 10;
+                    break;
+                case 5:
+                    //split piece
+                    this.lives = 1;
+                    this.moveSpeed = 6;
+                    break;
             }
         }
         Enemy.prototype.move = function (x, y) {
@@ -69,6 +77,8 @@ var gameobject;
             this.y = 100;
         };
         Enemy.prototype.update = function () {
+            if (this.typeID == 5)
+                console.log("Testing Life: " + this.lives);
             if (this.alive) {
                 this.diveTimer++;
                 if (this.diveTimer > this.diveBombTimer)
