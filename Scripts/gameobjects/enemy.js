@@ -42,6 +42,7 @@ var gameobject;
                     break;
                 case 4:
                     //boss
+                    this.moveSpeed = 4;
                     this.lives = 10;
                     break;
                 case 5:

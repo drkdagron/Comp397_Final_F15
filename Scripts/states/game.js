@@ -96,6 +96,8 @@ var states;
                         break;
                     case 2:
                         this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
+                    case 3:
+                        this.enemies[x] = new gameobject.Enemy(enemyBossSheet, "boss1", 4);
                 }
                 this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[x].gotoAndPlay("animation");
@@ -202,6 +204,8 @@ var states;
                         break;
                     case 2:
                         this.enemies[x] = new gameobject.Enemy(enemyHardenedSheet, "hardened1", 3);
+                    case 3:
+                        this.enemies[x] = new gameobject.Enemy(enemyBossSheet, "boss1", 4);
                 }
                 this.spawnSide = Math.floor(Math.random() * 3 + 1);
                 this.enemies[x].gotoAndPlay("animation");
@@ -346,9 +350,9 @@ var states;
                         var edgeY = this.controlPoints[cp].y - this.enemies[ene].y;
                         var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                         if (len < 50 + 50) {
-                            this.compLives--;
-                            this.controlPoints[cp].Kill();
+                            this.compLives -= 2;
                             this.enemies[ene].Kill();
+                            createjs.Sound.play("hit");
                         }
                     }
                     else {
@@ -372,7 +376,11 @@ var states;
                     var edgeY = this.player.y - this.enemies[ene].y;
                     var len = Math.sqrt(edgeX * edgeX + edgeY * edgeY);
                     if (len < 25 + 50) {
-                        this.player.Kill();
+                        this.spawnParticles(oldX, oldY);
+                        this.shipLives -= 2;
+                        this.enemies[ene].Kill();
+                        createjs.Sound.play("enemy_death");
+                        pScore += 2500;
                     }
                 }
                 else {
