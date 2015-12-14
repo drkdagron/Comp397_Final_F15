@@ -14,9 +14,10 @@ var states;
         }
         // PUBLIC METHODS
         Over.prototype.start = function () {
+            console.log("over state started");
             createjs.Sound.stop();
             createjs.Sound.play("game_over");
-            console.log("over state started");
+            musicPlaying = false;
             this.background = new gameobject.World(worldSheet, "world");
             this.addChild(this.background);
             this.gameover = new objects.Label("GAME OVER!!!", "40px Consolas", "#EEE", 400, 150);

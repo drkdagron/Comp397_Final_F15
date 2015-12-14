@@ -15,7 +15,7 @@ var gameobject;
             this.yBuffer = 20;
             this.alive = false;
             this.lives = 0;
-            this.diveBombTimer = 1500;
+            this.diveBombTimer = 450;
             this.diveTimer = 0;
             this.diving = false;
             this.type = "normal";

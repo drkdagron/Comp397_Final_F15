@@ -14,9 +14,12 @@ var states;
         }
         // PUBLIC METHODS
         Menu.prototype.start = function () {
-            createjs.Sound.stop();
-            createjs.Sound.play("bg_music", createjs.Sound.INTERRUPT_NONE, 0, 0, -1, 0.2, 0);
             console.log("menu state started");
+            if (!musicPlaying) {
+                createjs.Sound.stop();
+                createjs.Sound.play("bg_music", createjs.Sound.INTERRUPT_NONE, 0, 0, -1, 0.2, 0);
+                musicPlaying = true;
+            }
             this.background = new gameobject.World(worldSheet, "background");
             this.addChild(this.background);
             this.title = new objects.Label("1337 Bug Zapperz", "64px Consolas", "#FFFFFF", 400, 150);

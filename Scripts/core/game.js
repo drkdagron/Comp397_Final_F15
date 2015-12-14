@@ -32,6 +32,7 @@ var menu;
 var game;
 var over;
 var instruc;
+var musicPlaying = false;
 var pScore = 0;
 var NORMAL_ENEMY_COUNT = 3;
 var SPECIAL_ENEMY_COUNT = 2;

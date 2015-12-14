@@ -40,6 +40,7 @@ var game: states.Game;
 var over: states.Over;
 var instruc: states.Instruction;
 
+var musicPlaying: boolean = false;
 var pScore: number = 0;
 var NORMAL_ENEMY_COUNT: number = 3;
 var SPECIAL_ENEMY_COUNT: number = 2;

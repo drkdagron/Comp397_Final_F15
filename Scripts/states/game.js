@@ -27,6 +27,11 @@ var states;
         // PUBLIC METHODS
         Game.prototype.start = function () {
             console.log("game state started");
+            if (!musicPlaying) {
+                createjs.Sound.stop();
+                createjs.Sound.play("bg_music", createjs.Sound.INTERRUPT_NONE, 0, 0, -1, 0.2, 0);
+                musicPlaying = true;
+            }
             this.world = new gameobject.World(worldSheet, "background");
             this.addChild(this.world);
             for (var i = 0; i < CONTROL_POINT_COUNT; i++) {
