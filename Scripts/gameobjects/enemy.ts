@@ -4,7 +4,7 @@ module gameobject{
 		public xDir:number = 0;
 		public yDir:number = 0;
 		
-		private moveSpeed:number = 3;
+		private moveSpeed:number = 4;
 		private yBuffer:number = 20;
 		
 		private alive:boolean = false;
@@ -32,7 +32,7 @@ module gameobject{
 			{
 				case 1:
 					//fast moving enemy
-					this.moveSpeed = 6;
+					this.moveSpeed = 8;
 					this.lives = 1;
 					break;
 				case 2:
@@ -46,7 +46,7 @@ module gameobject{
 					break;
 				case 4:
 					//boss
-					this.moveSpeed = 4
+					this.moveSpeed = 6
 					this.lives = 10;
 					break;
 				case 5:
